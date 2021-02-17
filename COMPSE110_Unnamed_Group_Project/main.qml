@@ -4,19 +4,25 @@ import QtCharts 2.3
 import QtQuick.Controls 2.2
 
 Window {
-    width: 640*2
-    height: 480*2
+    id: mainWindow
+    width: 640*2.5 // 1280
+    height: 480*2 // 960
     visible: true
     title: qsTr("Weathercast")
 
+    // Sizing constraints for graphs
+    property int chartWidth: mainWindow.width / 3
+    property int chartHeight: mainWindow.height / 2
+
     Row {
+        id: graphRow
         anchors.top: parent.top
 
         // Chart for weather data
         ChartView {
             id: weatherGraph
-            width: 600
-            height: 400
+            width: chartWidth
+            height: chartHeight
             title: qsTr("Weather")
             theme: ChartView.ChartThemeDark
             antialiasing: true
@@ -32,8 +38,8 @@ Window {
         // Chart for power consumption data
         ChartView {
             id: consumptionGraph
-            width: 600
-            height: 400
+            width: chartWidth
+            height: chartHeight
             title: qsTr("Power Consumption")
             theme: ChartView.ChartThemeDark
             antialiasing: true
@@ -47,8 +53,8 @@ Window {
         // Chart for separation between power production types
         ChartView {
             id: productionGraph
-            width: 600
-            height: 400
+            width: chartWidth
+            height: chartHeight
             title: qsTr("Power production by method")
             theme: ChartView.ChartThemeDark
             antialiasing: true
@@ -62,6 +68,7 @@ Window {
     // Row for graph settings controllers
     Row {
         id: controlRow
+        anchors.top: graphRow.bottom
 
         Button {
             font.pointSize: 20
