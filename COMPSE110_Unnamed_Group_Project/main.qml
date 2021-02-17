@@ -1,6 +1,7 @@
 import QtQuick 2.6
 import QtQuick.Window 2.2
 import QtCharts 2.3
+import QtQuick.Controls 2.2
 
 Window {
     width: 640*2
@@ -61,5 +62,15 @@ Window {
     // Row for graph settings controllers
     Row {
         id: controlRow
+
+        Button {
+            font.pointSize: 20
+            text: "Click To Fetch Data From FMI"
+            anchors.top: parent.bottom
+
+            onClicked: {
+                downloader.load("http://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::simple&place=Pirkkala&timestep=30&parameters=t2m,ws_10min,n_man");
+                }
+        }
     }
 }
