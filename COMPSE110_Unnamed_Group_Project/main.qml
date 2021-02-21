@@ -15,6 +15,9 @@ Window {
     property int chartWidth: mainWindow.width / 3
     property int chartHeight: mainWindow.height / 2
 
+    property int day_hours: 24
+    property int week_hours: 24*7
+
     Row {
         id: graphRow
         objectName: "graphRow"
@@ -34,11 +37,20 @@ Window {
             LineSeries {
                 id: weatherSeries
                 objectName: "weatherSeries"
+                axisX: ValueAxis {
+                    min: 0
+                    max: day_hours
+                }
+                axisY: ValueAxis {
+                    min: 0
+                    max: 20
+                }
             }
-
             onSeriesAdded: {
+                console.log("points changed");
                 setAxisX(weatherSeries.axisX);
                 setAxisY(weatherSeries.axisY);
+
             }
         }
 
@@ -57,6 +69,14 @@ Window {
             LineSeries {
                 id: consumptionSeries
                 objectName: "consumptionSeries"
+                axisX: ValueAxis {
+                    min: 0
+                    max: day_hours
+                }
+                axisY: ValueAxis {
+                    min: 0
+                    max: 20
+                }
             }
 
             onSeriesAdded: {
@@ -79,6 +99,14 @@ Window {
             LineSeries {
                 id: productionSeries
                 objectName: "productionSeries"
+                axisX: ValueAxis {
+                    min: 0
+                    max: day_hours
+                }
+                axisY: ValueAxis {
+                    min: 0
+                    max: 20
+                }
             }
 
             onSeriesAdded: {
@@ -101,6 +129,17 @@ Window {
             onClicked: {
                 controller.fetchData("http://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::simple&place=Pirkkala&timestep=30&parameters=t2m,ws_10min,n_man");
                 }
+        }
+        Button {
+            font.pointSize: 20
+            text: "Test Render Charts"
+            anchors.top: parent.bottom
+
+            onClicked: {
+                controller.renderData(weatherGraph.objectName, weatherSeries.objectName);
+                controller.renderData(consumptionGraph.objectName, consumptionSeries.objectName);
+                controller.renderData(productionGraph.objectName, productionSeries.objectName);
+            }
         }
     }
 }
