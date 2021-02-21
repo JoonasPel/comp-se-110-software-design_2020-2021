@@ -11,8 +11,10 @@
 
 #include <QApplication>
 #include <QQmlApplicationEngine>
-#include <DownLoader.h>
 #include <QQmlContext>
+#include <DownLoader.h>
+#include <controller.h>
+#include <model.h>
 
 int main(int argc, char *argv[])
 {
@@ -25,9 +27,12 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 
     auto downloader{ std::make_shared<DownLoader>() };
+    auto model{ std::make_shared<Model>(downloader) };
+    auto controller{ std::make_shared<Controller>(model) };
+
     // give the QML side access
     auto context{ engine.rootContext() };
-    context->setContextProperty("downloader", downloader.get());
+    context->setContextProperty("controller", controller.get());
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

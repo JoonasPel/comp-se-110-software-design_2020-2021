@@ -24,16 +24,12 @@ void DownLoader::load(const QString &url)
 void DownLoader::downloadCompleted(QNetworkReply *reply)
 {
     //Create file to save data
-    QFile file("dataFromFMI.txt");
+    QFile file("dataFromFMI.xml");
 
     //Save data to file
     Q_ASSERT(file.open(QFile::WriteOnly));
     file.write(reply->readAll());
     file.close();
     reply->deleteLater();
-
-    //Inform user that data is saved
-    auto *label = new QLabel;
-    form->addRow(QString("Download completed. File saved"), label);
 }
 
