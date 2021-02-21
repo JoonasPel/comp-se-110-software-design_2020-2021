@@ -5,6 +5,7 @@ import QtQuick.Controls 2.2
 
 Window {
     id: mainWindow
+    objectName: "mainWindow"
     width: 640*2.5 // 1280
     height: 480*2 // 960
     visible: true
@@ -16,11 +17,13 @@ Window {
 
     Row {
         id: graphRow
+        objectName: "graphRow"
         anchors.top: parent.top
 
         // Chart for weather data
         ChartView {
             id: weatherGraph
+            objectName: "weatherGraph"
             width: chartWidth
             height: chartHeight
             title: qsTr("Weather")
@@ -30,29 +33,42 @@ Window {
             // List of actual data points in graph
             LineSeries {
                 id: weatherSeries
-                XYPoint { x: 1; y: 2}
-                XYPoint { x: 3; y: 4}
+                objectName: "weatherSeries"
+            }
+
+            onSeriesAdded: {
+                setAxisX(weatherSeries.axisX);
+                setAxisY(weatherSeries.axisY);
             }
         }
 
         // Chart for power consumption data
         ChartView {
             id: consumptionGraph
+            objectName: "consumptionGraph"
             width: chartWidth
             height: chartHeight
             title: qsTr("Power Consumption")
             theme: ChartView.ChartThemeDark
             antialiasing: true
 
+
             // List of actual data points in graph
             LineSeries {
                 id: consumptionSeries
+                objectName: "consumptionSeries"
+            }
+
+            onSeriesAdded: {
+                setAxisX(consumptionSeries.axisX);
+                setAxisY(consumptionSeries.axisY);
             }
         }
 
         // Chart for separation between power production types
         ChartView {
             id: productionGraph
+            objectName: "productionGraph"
             width: chartWidth
             height: chartHeight
             title: qsTr("Power production by method")
@@ -62,12 +78,19 @@ Window {
             // List of actual data points in graph
             LineSeries {
                 id: productionSeries
+                objectName: "productionSeries"
+            }
+
+            onSeriesAdded: {
+                setAxisX(productionSeries.axisX);
+                setAxisY(productionSeries.axisY);
             }
         }
     }
     // Row for graph settings controllers
     Row {
         id: controlRow
+        objectName: "controlRow"
         anchors.top: graphRow.bottom
 
         Button {

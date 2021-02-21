@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 
     auto downloader{ std::make_shared<DownLoader>() };
     auto model{ std::make_shared<Model>(downloader) };
-    auto controller{ std::make_shared<Controller>(model) };
+    auto controller{ std::make_shared<Controller>(model, &engine) };
 
     // give the QML side access
     auto context{ engine.rootContext() };
