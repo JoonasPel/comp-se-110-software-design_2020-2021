@@ -20,7 +20,7 @@ public:
 
     Q_INVOKABLE void fetchData(QString url);
 
-    Q_INVOKABLE void renderData(QString chart_name, QString ser_name);
+    Q_INVOKABLE void renderData(QString chart_name, QString series_name);
 
 private:
     std::shared_ptr<Model> model_;
