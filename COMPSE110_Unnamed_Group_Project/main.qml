@@ -17,6 +17,8 @@ Window {
 
     property int day_hours: 24
     property int week_hours: 24*7
+    property int graph_scale_h: day_hours
+    property int graph_scale_v: 30
 
     Row {
         id: graphRow
@@ -39,11 +41,11 @@ Window {
                 objectName: "weatherSeries"
                 axisX: ValueAxis {
                     min: 0
-                    max: day_hours
+                    max: graph_scale_h
                 }
                 axisY: ValueAxis {
                     min: 0
-                    max: 20
+                    max: graph_scale_v
                 }
             }
             onSeriesAdded: {
@@ -71,11 +73,11 @@ Window {
                 objectName: "consumptionSeries"
                 axisX: ValueAxis {
                     min: 0
-                    max: day_hours
+                    max: graph_scale_h
                 }
                 axisY: ValueAxis {
                     min: 0
-                    max: 20
+                    max: graph_scale_v
                 }
             }
 
@@ -101,11 +103,11 @@ Window {
                 objectName: "productionSeries"
                 axisX: ValueAxis {
                     min: 0
-                    max: day_hours
+                    max: graph_scale_h
                 }
                 axisY: ValueAxis {
                     min: 0
-                    max: 20
+                    max: graph_scale_v
                 }
             }
 
@@ -139,6 +141,15 @@ Window {
                 controller.renderData(weatherGraph.objectName, weatherSeries.objectName);
                 controller.renderData(consumptionGraph.objectName, consumptionSeries.objectName);
                 controller.renderData(productionGraph.objectName, productionSeries.objectName);
+            }
+        }
+        Slider {
+            from: 0
+            to: 1
+            anchors.top: parent.bottom
+            onValueChanged: {
+                if (value < 0.5) { graph_scale_h = day_hours }
+                else { graph_scale_h = week_hours }
             }
         }
     }
