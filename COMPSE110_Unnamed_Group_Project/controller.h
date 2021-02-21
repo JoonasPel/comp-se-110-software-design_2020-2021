@@ -4,6 +4,8 @@
 #include <memory>
 #include <QObject>
 
+#include <QtCharts>
+
 class Model;
 
 class Controller : public QObject
@@ -15,6 +17,8 @@ public:
                         QObject *parent = nullptr);
 
     Q_INVOKABLE void fetchData(QString url);
+
+    Q_INVOKABLE void renderData(QLineSeries *series);
 
 private:
     std::shared_ptr<Model> model_;
