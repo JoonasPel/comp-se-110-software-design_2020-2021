@@ -19,7 +19,11 @@ public:
     void renderData(QString chart_name, QString series_name, QQmlApplicationEngine* engine);
 
 private:
+    bool XMLparser();
+
     std::shared_ptr<DownLoader> downloader_;
+    std::map<QString,std::vector<QString>> structure_;
+    std::map<QString,std::map<QString,QString>> structure2_;
 };
 
 #endif // MODEL_H
