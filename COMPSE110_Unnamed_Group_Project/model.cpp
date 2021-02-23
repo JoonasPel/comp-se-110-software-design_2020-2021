@@ -27,20 +27,17 @@ QList<QPointF> Model::getPointSeries(QString name)
         qDebug() << "parsing in model.cpp failed(file missing maybe? Fetch FIRST!)";
     }
 
-    //create QList and append temperatures as Y values. X values are only 1,2,3...
+    //create QList and append temperatures as Y values. X coords are only 1,2,3...
     QList<QPointF> points;
-    float x_value = 0;
+    float x_coord = 1;
     for(auto DataPoint : structure2_)
     {
         QString temperature = DataPoint.second.at("t2m");
         //Convert  QString temperature to double
         double temperatureDouble = temperature.toFloat();
-        //change temperature from negative to positive
-        temperatureDouble = fabs(temperatureDouble);
 
         //Append temperature to QList and increase x-coord value.
-        x_value++;
-        points.append(QPointF(x_value, temperatureDouble));
+        points.append(QPointF(x_coord++, temperatureDouble));
     }
 
     return points;

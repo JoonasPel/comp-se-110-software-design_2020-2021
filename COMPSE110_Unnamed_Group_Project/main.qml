@@ -44,7 +44,7 @@ Window {
                     max: graph_scale_h
                 }
                 axisY: ValueAxis {
-                    min: 0
+                    min: -30
                     max: graph_scale_v
                 }
             }
