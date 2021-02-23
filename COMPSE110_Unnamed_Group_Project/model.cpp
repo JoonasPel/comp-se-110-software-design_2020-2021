@@ -29,15 +29,15 @@ QList<QPointF> Model::getPointSeries(QString name)
 
     //create QList and append temperatures as Y values. X coords are only 1,2,3...
     QList<QPointF> points;
-    float x_coord = 1;
-    for(auto DataPoint : structure2_)
+    float xCoord = 1;
+    for(auto dataPoint : structure_)
     {
-        QString temperature = DataPoint.second.at("t2m");
+        QString temperature = dataPoint.second.at("t2m");
         //Convert  QString temperature to double
         double temperatureDouble = temperature.toFloat();
 
         //Append temperature to QList and increase x-coord value.
-        points.append(QPointF(x_coord++, temperatureDouble));
+        points.append(QPointF(xCoord++, temperatureDouble));
     }
 
     return points;
@@ -75,17 +75,15 @@ void Model::renderData(QString chart_name, QString series_name, QQmlApplicationE
     }
 }
 
+/*
+ * //Parse xml file and save data to structure_
+ */
 bool Model::XMLparser()
 {
-    //Check if data file exists (downloaded in DownLoader)
-    bool fileExists = QFile::exists("dataFromFMI.xml");
-    if(!fileExists){ return false; }
-
-    //Parse xml file and save data to structure2_
-
     auto xmlFile = new QFile("dataFromFMI.xml");
     if (!xmlFile->open(QIODevice::ReadOnly | QIODevice::Text)) {
-                        qDebug()<<"Error";
+        qDebug()<<"Error opening file in XMLparser";
+        return false;
     }
     auto xmlReader = new QXmlStreamReader(xmlFile);
 
@@ -93,61 +91,53 @@ bool Model::XMLparser()
     QString currentParameterName;
 
     //Parse the XML until we reach end of it
-        while(!xmlReader->atEnd() && !xmlReader->hasError()) {
-                // Read next element
-                QXmlStreamReader::TokenType token = xmlReader->readNext();
-                //If token is just StartDocument - go to next
-                if(token == QXmlStreamReader::StartDocument) {
-                        continue;
-                }
-                //If token is StartElement - read it
-
-                if(token == QXmlStreamReader::StartElement) {
-
-                        if(xmlReader->name() == "ParameterName") {
-
-                            currentParameterName=xmlReader->readElementText();
-                            qDebug()<<currentParameterName;
-                            //structure[currentTime].push_back(value);
-                        }
-
-                        if(xmlReader->name() == "ParameterValue") {
-
-                            QString value =xmlReader->readElementText();
-                            structure_[currentTime].push_back(value);
-                            structure2_[currentTime][currentParameterName]=value;
-                        }
-                        if(xmlReader->name() == "Time") {
-                            auto newTime=xmlReader->readElementText();
-                            if(currentTime!=newTime){
-
-                                currentTime=newTime;
-
-                                structure_[currentTime]={};
-                                structure2_[currentTime]={};
-                            }
-                        }
-                }
+    while(!xmlReader->atEnd() && !xmlReader->hasError()) {
+        // Read next element
+        QXmlStreamReader::TokenType token = xmlReader->readNext();
+        //If token is just StartDocument - go to next
+        if(token == QXmlStreamReader::StartDocument) {
+            continue;
         }
-        for(auto item: structure2_){
-                qDebug()<<item.first;
-                //qDebug()<<"koko on "<<item.second.size();
-                for(auto element: item.second){
-                    qDebug()<<element;
+        //If token is StartElement - read it
+
+        if(token == QXmlStreamReader::StartElement) {
+
+            if(xmlReader->name() == "ParameterName") {
+
+                currentParameterName=xmlReader->readElementText();
+            }
+
+            if(xmlReader->name() == "ParameterValue") {
+
+                QString value =xmlReader->readElementText();
+                structure_[currentTime][currentParameterName]=value;
+            }
+            if(xmlReader->name() == "Time") {
+                auto newTime=xmlReader->readElementText();
+                if(currentTime!=newTime){
+
+                    currentTime=newTime;
+
+                    structure_[currentTime]={};
                 }
-                qDebug()<<"";
+            }
         }
-
-        if(xmlReader->hasError()) {
-                    qDebug()<<"se on error";
+    }
+    for(auto item: structure_){
+        qDebug()<<item.first;
+        for(auto element: item.second){
+            qDebug()<<element;
         }
+        qDebug()<<"";
+    }
 
-        //close reader and flush file
-        xmlReader->clear();
-        xmlFile->close();
+    if(xmlReader->hasError()) {
+        qDebug()<<"XMLparser error";
+    }
 
-        return true;
+    //close reader and flush file
+    xmlReader->clear();
+    xmlFile->close();
+
+    return true;
 }
-
-
-

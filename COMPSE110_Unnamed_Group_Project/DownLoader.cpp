@@ -31,5 +31,7 @@ void DownLoader::downloadCompleted(QNetworkReply *reply)
     file.write(reply->readAll());
     file.close();
     reply->deleteLater();
+
+    qDebug() << "Fetching ready!";
 }
 

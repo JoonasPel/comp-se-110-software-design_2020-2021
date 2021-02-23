@@ -22,8 +22,7 @@ private:
     bool XMLparser();
 
     std::shared_ptr<DownLoader> downloader_;
-    std::map<QString,std::vector<QString>> structure_;
-    std::map<QString,std::map<QString,QString>> structure2_;
+    std::map<QString,std::map<QString,QString>> structure_;
 };
 
 #endif // MODEL_H
