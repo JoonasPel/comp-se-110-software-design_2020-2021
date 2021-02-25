@@ -5,6 +5,7 @@
 #include <QString>
 #include <QObject>
 #include <QtCharts>
+#include <vector>
 #include <QQmlApplicationEngine>
 
 class DownLoader;
@@ -20,6 +21,7 @@ public:
 
 private:
     bool XMLparser();
+    QString urlModifier(QString, std::vector<QString>);
 
     std::shared_ptr<DownLoader> downloader_;
     std::map<QString,std::map<QString,QString>> structure_;

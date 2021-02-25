@@ -1,6 +1,7 @@
 #include <QXmlStreamReader>
 #include <map>
 #include <vector>
+#include <QUrlQuery>
 
 #include "model.h"
 #include "DownLoader.h"
@@ -12,7 +13,14 @@ Model::Model(std::shared_ptr<DownLoader> downloader) :
 
 void Model::fetchData(QString url)
 {
-    downloader_->load(url);
+    //This is just an example how to use urlModifier and will be removed later!
+    std::vector<QString> querys;
+    querys.push_back("endtime=2021-02-20T09:00:00Z");
+    querys.push_back("place=Kuopio");
+    querys.push_back("parameters=t2m");
+    QString urlNew = urlModifier(url, querys);
+
+    downloader_->load(urlNew);
 }
 
 /*
@@ -140,4 +148,34 @@ bool Model::XMLparser()
     xmlFile->close();
 
     return true;
+}
+
+/*
+ * Modifies url with given querys and returns modified(new) url
+ */
+QString Model::urlModifier(QString url, std::vector<QString> querys)
+{
+
+    QUrl urlNew(url);
+    QUrlQuery query(urlNew.query());
+
+    //Modify every query separately
+    for (QString oneQuery : querys) {
+        //split oneQuery to separate key and value (ie. {"place", "Tampere"})
+        QStringList keyAndValue = oneQuery.split("=");
+        //Checks that splitting is succesful.
+        if(keyAndValue.length() != 2) {
+            qDebug() << "urlModifier FAILED! Error in splitting with '='. "
+                        "Expected length 2, got: " << keyAndValue.length();
+            return url;
+        }
+        //Removes old query if it exists
+        query.removeQueryItem(keyAndValue[0]);
+        //Adds new query (key and value)
+        query.addQueryItem(keyAndValue[0], keyAndValue[1]);
+    }
+    urlNew.setQuery(query);
+    qDebug() << urlNew;
+
+    return urlNew.toString();
 }
