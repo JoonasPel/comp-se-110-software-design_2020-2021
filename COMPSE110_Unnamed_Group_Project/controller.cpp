@@ -11,9 +11,9 @@ Controller::Controller(std::shared_ptr<Model> model, QQmlApplicationEngine *engi
 {
 }
 
-void Controller::fetchData(QString url)
+void Controller::fetchData(QString url, QString place)
 {
-    model_->fetchData(url);
+    model_->fetchData(url, place);
 }
 
 // Render weather data to application UI graphs.

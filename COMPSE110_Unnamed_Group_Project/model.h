@@ -15,7 +15,7 @@ class Model
 public:
     explicit Model(std::shared_ptr<DownLoader> downloader);
 
-    void fetchData(QString url);
+    void fetchData(QString url, QString place);
     QList<QPointF> getPointSeries(QString name);
     void renderData(QString chart_name, QString series_name, QQmlApplicationEngine* engine);
 

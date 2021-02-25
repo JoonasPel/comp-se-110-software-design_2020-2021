@@ -2,6 +2,7 @@
 #include <map>
 #include <vector>
 #include <QUrlQuery>
+#include <QDateTime>
 
 #include "model.h"
 #include "DownLoader.h"
@@ -11,13 +12,11 @@ Model::Model(std::shared_ptr<DownLoader> downloader) :
 {
 }
 
-void Model::fetchData(QString url)
+void Model::fetchData(QString url, QString place)
 {
     //This is just an example how to use urlModifier and will be removed later!
     std::vector<QString> querys;
-    querys.push_back("endtime=2021-02-20T09:00:00Z");
-    querys.push_back("place=Kuopio");
-    querys.push_back("parameters=t2m");
+    querys.push_back("place=" + place);
     QString urlNew = urlModifier(url, querys);
 
     downloader_->load(urlNew);

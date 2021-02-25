@@ -129,7 +129,7 @@ Window {
             anchors.top: parent.bottom
 
             onClicked: {
-                controller.fetchData("http://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::simple&place=Pirkkala&starttime=2021-02-14T09:00:00Z&endtime=2021-02-21T09:00:00Z&timestep=60&parameters=t2m,ws_10min,n_man");
+                controller.fetchData("http://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::simple&place=Pirkkala&starttime=2021-02-14T09:00:00Z&endtime=2021-02-21T09:00:00Z&timestep=60&parameters=t2m,ws_10min,n_man", placeSelector.currentText);
                 }
         }
         Button {
@@ -151,6 +151,12 @@ Window {
                 if (value < 0.5) { graph_scale_h = day_hours }
                 else { graph_scale_h = week_hours }
             }
+        }
+        ComboBox {
+            id: placeSelector
+            anchors.top: parent.bottom
+            width: 200
+            model: [ "Tampere", "Rovaniemi", "Helsinki" ]
         }
     }
 }

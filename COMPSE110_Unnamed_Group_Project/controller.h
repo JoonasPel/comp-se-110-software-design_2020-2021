@@ -18,7 +18,7 @@ public:
     explicit Controller(std::shared_ptr<Model> model, QQmlApplicationEngine *engine,
                         QObject *parent = nullptr);
 
-    Q_INVOKABLE void fetchData(QString url);
+    Q_INVOKABLE void fetchData(QString url, QString place);
 
     Q_INVOKABLE void renderData(QString chart_name, QString series_name);
 
