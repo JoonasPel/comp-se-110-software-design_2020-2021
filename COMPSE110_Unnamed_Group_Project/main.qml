@@ -26,137 +26,29 @@ Window {
         anchors.top: parent.top
 
         // Chart for weather data
-        ChartView {
+        ChartElement {
             id: weatherGraph
+            typeName: "weather"
             objectName: "weatherGraph"
-            width: chartWidth
-            height: chartHeight
-            title: qsTr("Weather")
-            theme: ChartView.ChartThemeDark
-            antialiasing: true
-
-            // List of actual data points in graph
-            LineSeries {
-                id: weatherSeries
-                objectName: "weatherSeries"
-                axisX: ValueAxis {
-                    min: 0
-                    max: graph_scale_h
-                }
-                axisY: ValueAxis {
-                    min: -30
-                    max: graph_scale_v
-                }
-            }
-            onSeriesAdded: {
-                console.log("points changed");
-                setAxisX(weatherSeries.axisX);
-                setAxisY(weatherSeries.axisY);
-
-            }
         }
 
         // Chart for power consumption data
-        ChartView {
+        ChartElement {
             id: consumptionGraph
+            typeName: "consumption"
             objectName: "consumptionGraph"
-            width: chartWidth
-            height: chartHeight
-            title: qsTr("Power Consumption")
-            theme: ChartView.ChartThemeDark
-            antialiasing: true
-
-
-            // List of actual data points in graph
-            LineSeries {
-                id: consumptionSeries
-                objectName: "consumptionSeries"
-                axisX: ValueAxis {
-                    min: 0
-                    max: graph_scale_h
-                }
-                axisY: ValueAxis {
-                    min: 0
-                    max: graph_scale_v
-                }
-            }
-
-            onSeriesAdded: {
-                setAxisX(consumptionSeries.axisX);
-                setAxisY(consumptionSeries.axisY);
-            }
         }
 
         // Chart for separation between power production types
-        ChartView {
+        ChartElement {
             id: productionGraph
+            typeName: "production"
             objectName: "productionGraph"
-            width: chartWidth
-            height: chartHeight
-            title: qsTr("Power production by method")
-            theme: ChartView.ChartThemeDark
-            antialiasing: true
 
-            // List of actual data points in graph
-            LineSeries {
-                id: productionSeries
-                objectName: "productionSeries"
-                axisX: ValueAxis {
-                    min: 0
-                    max: graph_scale_h
-                }
-                axisY: ValueAxis {
-                    min: 0
-                    max: graph_scale_v
-                }
-            }
-
-            onSeriesAdded: {
-                setAxisX(productionSeries.axisX);
-                setAxisY(productionSeries.axisY);
-            }
         }
+
     }
-    // Row for graph settings controllers
-    Row {
+    ControlRow {
         id: controlRow
-        objectName: "controlRow"
-        anchors.top: graphRow.bottom
-
-        Button {
-            font.pointSize: 20
-            text: "Click To Fetch Data From FMI"
-            anchors.top: parent.bottom
-
-            onClicked: {
-                controller.fetchData("http://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::simple&place=Pirkkala&starttime=2021-02-14T09:00:00Z&endtime=2021-02-21T09:00:00Z&timestep=60&parameters=t2m,ws_10min,n_man", placeSelector.currentText);
-                }
-        }
-        Button {
-            font.pointSize: 20
-            text: "Test Render Charts"
-            anchors.top: parent.bottom
-
-            onClicked: {
-                controller.renderData(weatherGraph.objectName, weatherSeries.objectName);
-                controller.renderData(consumptionGraph.objectName, consumptionSeries.objectName);
-                controller.renderData(productionGraph.objectName, productionSeries.objectName);
-            }
-        }
-        Slider {
-            from: 0
-            to: 1
-            anchors.top: parent.bottom
-            onValueChanged: {
-                if (value < 0.5) { graph_scale_h = day_hours }
-                else { graph_scale_h = week_hours }
-            }
-        }
-        ComboBox {
-            id: placeSelector
-            anchors.top: parent.bottom
-            width: 200
-            model: [ "Tampere", "Rovaniemi", "Helsinki" ]
-        }
     }
 }
