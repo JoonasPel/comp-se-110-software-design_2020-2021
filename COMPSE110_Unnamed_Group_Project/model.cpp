@@ -34,12 +34,16 @@ QList<QPointF> Model::getPointSeries(QString name)
         qDebug() << "parsing in model.cpp failed(file missing maybe? Fetch FIRST!)";
     }
 
-    //create QList and append temperatures as Y values. X coords are only 1,2,3...
     QList<QPointF> points;
+
+    QString paramName = "";
+
+    //create QList and append temperatures as Y values. X coords are only 1,2,3...
+
     float xCoord = 1;
     for(auto dataPoint : structure_)
     {
-        QString temperature = dataPoint.second.at("t2m");
+        QString temperature = dataPoint.second.at(name);
         //Convert  QString temperature to double
         double temperatureDouble = temperature.toFloat();
 
@@ -52,8 +56,20 @@ QList<QPointF> Model::getPointSeries(QString name)
 
 void Model::renderData(QString chart_name, QString series_name, QQmlApplicationEngine* engine)
 {
+    QString paramName = "";
+
+    // Get points by parameter.
+    if(series_name == "temperature") { paramName = "t2m"; }
+    else if (series_name == "windSpeed") { paramName = "ws_10min"; }
+
+    // If no proper series is specified do nothing.
+    else {
+        qDebug() << "No series name specified for model::renderData(), nothing rendered!";
+        return;
+    }
+
     // Coordinates for data points fetched.
-    QList<QPointF> points = getPointSeries( series_name );
+    QList<QPointF> points = getPointSeries( paramName );
 
     QObject *view = engine->rootObjects().at(0)->findChild<QObject*>(chart_name);
     QAbstractSeries* series = nullptr;
@@ -112,6 +128,10 @@ bool Model::XMLparser()
             if(xmlReader->name() == "ParameterName") {
 
                 currentParameterName=xmlReader->readElementText();
+
+
+                qDebug() << currentParameterName;
+
             }
 
             if(xmlReader->name() == "ParameterValue") {

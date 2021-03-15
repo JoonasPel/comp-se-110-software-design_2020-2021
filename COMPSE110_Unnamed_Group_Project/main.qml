@@ -28,21 +28,38 @@ Window {
         // Chart for weather data
         ChartElement {
             id: weatherGraph
-            typeName: "weather"
             objectName: "weatherGraph"
+
+            // Temperature
+            LineSeries {
+                id: temperature;
+                objectName: "temperature"
+                axisX: ValueAxis {
+                    min: 0
+                    max: graph_scale_h
+                }
+                axisY: ValueAxis {
+                    min: -30
+                    max: graph_scale_v
+                }
+            }
+
+            // Windspeed
+            LineSeries {
+                id: windSpeed;
+                objectName: "windSpeed"
+            }
         }
 
         // Chart for power consumption data
         ChartElement {
             id: consumptionGraph
-            typeName: "consumption"
             objectName: "consumptionGraph"
         }
 
         // Chart for separation between power production types
         ChartElement {
             id: productionGraph
-            typeName: "production"
             objectName: "productionGraph"
 
         }
