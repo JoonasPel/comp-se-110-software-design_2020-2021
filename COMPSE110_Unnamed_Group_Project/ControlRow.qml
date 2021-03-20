@@ -6,7 +6,7 @@ import QtQuick.Controls 2.2
 // Row for graph settings controllers
 Row {
     objectName: "controlRow"
-    anchors.top: graphRow.bottom
+    anchors.top: graphSelectors.bottom
 
     /*
      * Original button for fetching data

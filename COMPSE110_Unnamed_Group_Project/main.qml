@@ -29,6 +29,7 @@ Window {
         ChartElement {
             id: weatherGraph
             objectName: "weatherGraph"
+            title: "Weather"
 
             // Temperature
             LineSeries {
@@ -48,6 +49,10 @@ Window {
             LineSeries {
                 id: windSpeed;
                 objectName: "windSpeed"
+                axisY: ValueAxis {
+                    min: 0
+                    max: graph_scale_v
+                }
             }
         }
 
@@ -55,15 +60,86 @@ Window {
         ChartElement {
             id: consumptionGraph
             objectName: "consumptionGraph"
+            title: "Power consumption"
+
+            // General consumption
+            LineSeries {
+                id: totalConsumption;
+                objectName: "totalConsumption"
+                axisY: ValueAxis {
+                    min: 0
+                    max: graph_scale_v
+                }
+            }
         }
 
         // Chart for separation between power production types
         ChartElement {
             id: productionGraph
             objectName: "productionGraph"
+            title: "Power production"
 
+            // General production
+            LineSeries {
+                id: totalProduction;
+                objectName: "totalProduction"
+                axisY: ValueAxis {
+                    min: 0
+                    max: graph_scale_v
+                }
+            }
+            LineSeries {
+                id: windProduction;
+                objectName: "windProduction"
+            }
+            LineSeries {
+                id: waterProduction;
+                objectName: "waterProduction"
+            }
         }
 
+    }
+    Row {
+        id: graphSelectors
+        objectName: "graphSelectors"
+        anchors.top: graphRow.bottom
+
+        GraphCheckBox {
+            id: temperatureBox
+            text: qsTr("Temperature")
+            checked: true
+            linkedSeries: temperature
+        }
+        GraphCheckBox {
+            id: windBox
+            text: qsTr("Wind speed")
+            checked: false
+            linkedSeries: windSpeed
+        }
+        GraphCheckBox {
+            id: consumptionBox
+            text: qsTr("Total Consumption")
+            checked: false
+            linkedSeries: totalConsumption
+        }
+        GraphCheckBox {
+            id: productionBox
+            text: qsTr("Total Production")
+            checked: false
+            linkedSeries: totalProduction
+        }
+        GraphCheckBox {
+            id: productionWaterBox
+            text: qsTr("Water Power")
+            checked: false
+            linkedSeries: waterProduction
+        }
+        GraphCheckBox {
+            id: productionWindBox
+            text: qsTr("Wind Power")
+            checked: false
+            linkedSeries: windProduction
+        }
     }
     ControlRow {
         id: controlRow
