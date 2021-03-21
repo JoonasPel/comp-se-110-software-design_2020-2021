@@ -89,6 +89,10 @@ Window {
                 }
             }
             LineSeries {
+                id: nuclearProduction;
+                objectName: "nuclearProduction"
+            }
+            LineSeries {
                 id: windProduction;
                 objectName: "windProduction"
             }
@@ -96,14 +100,26 @@ Window {
                 id: waterProduction;
                 objectName: "waterProduction"
             }
+            StackedBarSeries {
+                property var waterAmo: []
+                property var windAmo: []
+                property var nuclAmo: []
+                id: productionPercentages
+                objectName: "productionPercentages"
+                BarSet { id: waterBar; label: "Water"; values: productionPercentages.waterAmo}
+                BarSet { id: windBar; label: "Wind"; values: productionPercentages.windAmo}
+                BarSet { id: nuclBar; label: "Nuclear"; values: productionPercentages.nuclAmo}
+            }
         }
-
     }
     Row {
         id: graphSelectors
         objectName: "graphSelectors"
         anchors.top: graphRow.bottom
 
+        /* ============================
+         * Left graph: Weather elements
+         */
         GraphCheckBox {
             id: temperatureBox
             text: qsTr("Temperature")
@@ -116,17 +132,31 @@ Window {
             checked: false
             linkedSeries: windSpeed
         }
+
+        /* ================================
+         * Middle graph: Consumption values
+         */
         GraphCheckBox {
             id: consumptionBox
             text: qsTr("Total Consumption")
-            checked: false
+            checked: true
             linkedSeries: totalConsumption
         }
+
+        /* ==============================
+         * Right graph: Production values
+         */
         GraphCheckBox {
             id: productionBox
             text: qsTr("Total Production")
-            checked: false
+            checked: true
             linkedSeries: totalProduction
+        }
+        GraphCheckBox {
+            id: productionNuclearBox
+            text: qsTr("Nuclear Power")
+            checked: false
+            linkedSeries: nuclearProduction
         }
         GraphCheckBox {
             id: productionWaterBox
@@ -140,6 +170,20 @@ Window {
             checked: false
             linkedSeries: windProduction
         }
+        GraphCheckBox {
+            id: productionPercentagesBox
+            text: qsTr("Production Percentages")
+            checked: false
+            linkedSeries: productionPercentages
+            /*
+            onCheckedChanged: {
+                waterBar.visible = checkState
+                windBar.visible = checkState
+                nuclBar.visible = checkState
+            }
+            */
+        }
+
     }
     ControlRow {
         id: controlRow
