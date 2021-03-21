@@ -187,5 +187,38 @@ Window {
     }
     ControlRow {
         id: controlRow
+        anchors.top: graphSelectors.bottom
+    }
+    Row {
+        id: historyQuery
+        anchors.top: controlRow.bottom
+        Button {
+            text: qsTr("Fetch history")
+            anchors.top: parent.bottom
+        }
+        TextField {
+            id: startTimeSelector
+            anchors.top: parent.bottom
+            placeholderText: qsTr("Starting time")
+        }
+        TextField {
+            id: endTimeSelector
+            anchors.top: parent.bottom
+            placeholderText: qsTr("Ending time")
+        }
+    }
+    Row {
+        id: preferenceSettings
+        anchors.top: historyQuery.bottom
+        Button {
+            id: savePreferences
+            anchors.top: parent.bottom
+            text: qsTr("Save preferences")
+        }
+        Button {
+            id: loadPreferences
+            anchors.top: parent.bottom
+            text: qsTr("Load preferences")
+        }
     }
 }

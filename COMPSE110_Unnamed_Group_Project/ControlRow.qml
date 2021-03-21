@@ -50,4 +50,19 @@ Row {
         width: 200
         model: [ "Tampere", "Rovaniemi", "Helsinki" ]
     }
+    TextField {
+        id: startTimeSelector
+        anchors.top: parent.bottom
+        placeholderText: qsTr("Starting time")
+    }
+    TextField {
+        id: endTimeSelector
+        anchors.top: parent.bottom
+        placeholderText: qsTr("Ending time")
+    }
+    Button {
+        id: savePreference
+        anchors.top: parent.bottom
+        text: qsTr("Save current forecast")
+    }
 }
