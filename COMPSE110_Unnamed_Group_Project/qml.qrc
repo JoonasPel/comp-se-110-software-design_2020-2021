@@ -4,5 +4,6 @@
         <file>ControlRow.qml</file>
         <file>ChartElement.qml</file>
         <file>GraphCheckBox.qml</file>
+        <file>DatePicker.qml</file>
     </qresource>
 </RCC>

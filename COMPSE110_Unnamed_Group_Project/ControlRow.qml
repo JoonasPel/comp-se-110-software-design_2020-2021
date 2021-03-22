@@ -50,7 +50,18 @@ Row {
         width: 200
         model: [ "Tampere", "Rovaniemi", "Helsinki" ]
     }
-    TextField {
+    DatePicker{
+        id: startDatePicker
+        anchors.top: parent.bottom
+        buttonText: "Start date"
+    }
+    DatePicker{
+        id: endDatePicker
+        anchors.top: parent.bottom
+        buttonText: "End date"
+    }
+
+    /*TextField {
         id: startTimeSelector
         anchors.top: parent.bottom
         placeholderText: qsTr("Starting time")
@@ -59,7 +70,7 @@ Row {
         id: endTimeSelector
         anchors.top: parent.bottom
         placeholderText: qsTr("Ending time")
-    }
+    }*/
     Button {
         id: savePreference
         anchors.top: parent.bottom
