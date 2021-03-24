@@ -122,7 +122,6 @@ bool Model::XMLparser()
             continue;
         }
         //If token is StartElement - read it
-
         if(token == QXmlStreamReader::StartElement) {
 
             if(xmlReader->name() == "ParameterName") {
@@ -139,6 +138,7 @@ bool Model::XMLparser()
                 QString value =xmlReader->readElementText();
                 structure_[currentTime][currentParameterName]=value;
             }
+
             if(xmlReader->name() == "Time") {
                 auto newTime=xmlReader->readElementText();
                 if(currentTime!=newTime){
@@ -147,6 +147,13 @@ bool Model::XMLparser()
 
                     structure_[currentTime]={};
                 }
+            }
+            //Checking if fetching failed and xml file is an expectionreport
+            if(xmlReader->name() == "ExceptionText") {
+
+                QString value = xmlReader->readElementText();
+                qDebug() << "Fetching error: " << value;
+                return false;
             }
         }
     }
