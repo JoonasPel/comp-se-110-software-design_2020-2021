@@ -5,6 +5,7 @@ Item {
     width: 100
     height: 50
     property alias buttonText: button.text
+    property alias text: textDate.text
     TextField {
         id: textDate
         width: 100
@@ -36,7 +37,6 @@ Item {
                selectedDate: new Date()
                onClicked:  {
                    cal.visible=false
-                   textDate.text.
                    textDate.text=Qt.formatDate(cal.selectedDate, "dd-MM-yyyy");
 
                }

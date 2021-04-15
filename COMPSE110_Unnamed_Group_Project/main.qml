@@ -233,12 +233,17 @@ Window {
                     controller.editSettingsValue(current.objectName + "Checked", current.checked);
                 }
 
-            // Save place to Settings
+            // Save place, start date and end date to Settings
                 for( var child in controlRow.children) {
                     var currentChild = controlRow.children[child];
+
                     if( currentChild.objectName === "placeSelector") {
                         controller.editSettingsValue(currentChild.objectName,
                                                      currentChild.currentIndex)
+                    } else if ( currentChild.objectName === "startDatePicker" ||
+                               currentChild.objectName === "endDatePicker" ) {
+                        controller.editSettingsValue(currentChild.objectName,
+                                                     currentChild.text)
                     }
                 }
             }
@@ -261,8 +266,13 @@ Window {
             // Load place from Settings
                 for( var child in controlRow.children) {
                     var currentChild = controlRow.children[child];
+
                     if( currentChild.objectName === "placeSelector") {
                         currentChild.currentIndex = controller.fetchSettingsValue(currentChild.objectName);
+                    } else if ( currentChild.objectName === "startDatePicker" ||
+                               currentChild.objectName === "endDatePicker" ) {
+                        currentChild.text = controller.fetchSettingsValue(currentChild.objectName);
+
                     }
                 }
 
