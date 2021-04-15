@@ -12,11 +12,14 @@ Model::Model(std::shared_ptr<DownLoader> downloader) :
 {
 }
 
-void Model::fetchData(QString url, QString place)
+void Model::fetchData(QString url, QString place, QString startTime, QString endTime)
 {
     //This is just an example how to use urlModifier and will be removed later!
     std::vector<QString> querys;
     querys.push_back("place=" + place);
+    querys.push_back("starttime=" + startTime);
+    querys.push_back("endTime=" + endTime);
+
     QString urlNew = urlModifier(url, querys);
 
     downloader_->load(urlNew);
@@ -129,7 +132,7 @@ bool Model::XMLparser()
                 currentParameterName=xmlReader->readElementText();
 
 
-                qDebug() << currentParameterName;
+                //qDebug() << currentParameterName;
 
             }
 
@@ -158,11 +161,11 @@ bool Model::XMLparser()
         }
     }
     for(auto item: structure_){
-        qDebug()<<item.first;
+        //qDebug()<<item.first;
         for(auto element: item.second){
-            qDebug()<<element;
+            //qDebug()<<element;
         }
-        qDebug()<<"";
+        //qDebug()<<"";
     }
 
     if(xmlReader->hasError()) {

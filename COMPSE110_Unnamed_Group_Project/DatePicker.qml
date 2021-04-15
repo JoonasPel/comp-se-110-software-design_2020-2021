@@ -11,7 +11,7 @@ Item {
         width: 100
         height: 40
         //placeholderText: qsTr("Text Field")
-        text:Qt.formatDate(cal.selectedDate, "dd-MM-yyyy")
+        text:Qt.formatDate(cal.selectedDate, "yyyy-MM-dd")
         font.family:"times new roman"
         font.pointSize: 14
     }
@@ -37,7 +37,7 @@ Item {
                selectedDate: new Date()
                onClicked:  {
                    cal.visible=false
-                   textDate.text=Qt.formatDate(cal.selectedDate, "dd-MM-yyyy");
+                   textDate.text=Qt.formatDate(cal.selectedDate, "yyyy-MM-dd");
 
                }
     }
