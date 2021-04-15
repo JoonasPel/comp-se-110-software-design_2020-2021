@@ -232,6 +232,15 @@ Window {
 
                     controller.editSettingsValue(current.objectName + "Checked", current.checked);
                 }
+
+            // Save place to Settings
+                for( var child in controlRow.children) {
+                    var currentChild = controlRow.children[child];
+                    if( currentChild.objectName === "placeSelector") {
+                        controller.editSettingsValue(currentChild.objectName,
+                                                     currentChild.currentIndex)
+                    }
+                }
             }
         }
         Button {
@@ -248,6 +257,15 @@ Window {
                     console.log("Result " + controller.fetchSettingsValue(current.objectName + "Checked"));
                     current.checked = controller.fetchSettingsValue(current.objectName + "Checked");
                 }
+
+            // Load place from Settings
+                for( var child in controlRow.children) {
+                    var currentChild = controlRow.children[child];
+                    if( currentChild.objectName === "placeSelector") {
+                        currentChild.currentIndex = controller.fetchSettingsValue(currentChild.objectName);
+                    }
+                }
+
             }
         }
     }

@@ -46,6 +46,7 @@ Row {
     }
     ComboBox {
         id: placeSelector
+        objectName: "placeSelector"
         anchors.top: parent.bottom
         width: 200
         model: [ "Tampere", "Rovaniemi", "Helsinki" ]
