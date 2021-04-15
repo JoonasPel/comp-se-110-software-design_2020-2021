@@ -15,6 +15,7 @@
 #include <DownLoader.h>
 #include <controller.h>
 #include <model.h>
+#include <storage.h>
 
 int main(int argc, char *argv[])
 {
@@ -24,11 +25,17 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
 
+    // Set values for settings
+    app.setOrganizationName("Unnamed");
+    app.setOrganizationDomain("unnamed");
+    app.setApplicationName("WeatherCast");
+
     QQmlApplicationEngine engine;
 
     auto downloader{ std::make_shared<DownLoader>() };
     auto model{ std::make_shared<Model>(downloader) };
-    auto controller{ std::make_shared<Controller>(model, &engine) };
+    auto storage{ std::make_shared<Storage>() };
+    auto controller{ std::make_shared<Controller>(model, storage, &engine) };
 
     // give the QML side access
     auto context{ engine.rootContext() };

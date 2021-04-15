@@ -2,6 +2,7 @@ import QtQuick 2.6
 import QtQuick.Window 2.2
 import QtCharts 2.3
 import QtQuick.Controls 2.2
+import Qt.labs.settings 1.0
 
 Window {
     id: mainWindow
@@ -122,12 +123,14 @@ Window {
          */
         GraphCheckBox {
             id: temperatureBox
+            objectName: "temperatureBox"
             text: qsTr("Temperature")
             checked: true
             linkedSeries: temperature
         }
         GraphCheckBox {
             id: windBox
+            objectName: "windBox"
             text: qsTr("Wind speed")
             checked: false
             linkedSeries: windSpeed
@@ -138,6 +141,7 @@ Window {
          */
         GraphCheckBox {
             id: consumptionBox
+            objectName: "consumptionBox"
             text: qsTr("Total Consumption")
             checked: true
             linkedSeries: totalConsumption
@@ -148,30 +152,35 @@ Window {
          */
         GraphCheckBox {
             id: productionBox
+            objectName: "productionBox"
             text: qsTr("Total Production")
             checked: true
             linkedSeries: totalProduction
         }
         GraphCheckBox {
             id: productionNuclearBox
+            objectName: "productionNuclearBox"
             text: qsTr("Nuclear Power")
             checked: false
             linkedSeries: nuclearProduction
         }
         GraphCheckBox {
             id: productionWaterBox
+            objectName: "productionWaterBox"
             text: qsTr("Water Power")
             checked: false
             linkedSeries: waterProduction
         }
         GraphCheckBox {
             id: productionWindBox
+            objectName: "productionWindBox"
             text: qsTr("Wind Power")
             checked: false
             linkedSeries: windProduction
         }
         GraphCheckBox {
             id: productionPercentagesBox
+            objectName: "productionPercentagesBox"
             text: qsTr("Production Percentages")
             checked: false
             linkedSeries: productionPercentages
@@ -214,11 +223,52 @@ Window {
             id: savePreferences
             anchors.top: parent.bottom
             text: qsTr("Save preferences")
+
+            // Save element values to Settings element
+            onClicked: {
+
+                for( var checkBox in graphSelectors.children ) {
+                    var current = graphSelectors.children[checkBox];
+
+                    controller.editSettingsValue(current.objectName + "Checked", current.checked);
+                }
+            }
         }
         Button {
             id: loadPreferences
             anchors.top: parent.bottom
             text: qsTr("Load preferences")
+
+            // Load values to elements from Settings
+            onClicked: {
+                console.log("====Settings==========")
+                for( let checkBox in graphSelectors.children ) {
+                    var current = graphSelectors.children[checkBox];
+
+                    console.log("Result " + controller.fetchSettingsValue(current.objectName + "Checked"));
+                    current.checked = controller.fetchSettingsValue(current.objectName + "Checked");
+                }
+            }
         }
+    }
+
+    Settings {
+        id: settings
+
+        // Checkbox values
+        property bool tempChecked: false
+        property bool windChecked: false
+        property bool prodChecked: false
+        property bool consumpChecked: false
+        property bool prodNuclearChecked: false
+        property bool prodWaterChecked: false
+        property bool prodWindChecked: false
+        property bool prodPercChecked: false
+
+        // Starting - ending times
+        property string currentStartTime: ""
+        property string currentEndTime: ""
+        property string historyStartTime: ""
+        property string historyEndTime: ""
     }
 }

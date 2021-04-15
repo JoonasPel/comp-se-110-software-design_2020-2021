@@ -11,13 +11,15 @@ CONFIG += c++11
 
 HEADERS= DownLoader.h \
     controller.h \
-    model.h
+    model.h \
+    storage.h
 
 SOURCES += \
         controller.cpp \
         main.cpp \
         DownLoader.cpp \
-        model.cpp
+        model.cpp \
+        storage.cpp
 
 RESOURCES += qml.qrc
 
