@@ -12,14 +12,16 @@ CONFIG += c++11
 HEADERS= DownLoader.h \
     controller.h \
     model.h \
-    storage.h
+    storage.h \
+    fingridapi.hh
 
 SOURCES += \
         controller.cpp \
         main.cpp \
         DownLoader.cpp \
         model.cpp \
-        storage.cpp
+        storage.cpp \
+        fingridapi.cpp
 
 RESOURCES += qml.qrc
 

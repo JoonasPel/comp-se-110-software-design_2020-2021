@@ -14,29 +14,45 @@ FinGridAPI::FinGridAPI(QWidget* parent):QWidget(parent)
         connect(man,&QNetworkAccessManager::finished,this,&FinGridAPI::downloadFinished);
 }
 
-void FinGridAPI::downloadData()
+void FinGridAPI::downloadData(QString startTime,QString endTime, QString variableid)
 {
     //193:Overall electricity consumption in Finland
-    //
+    //75: windpower hourly data
+    //188: nuclear production real time data
+    //191: hydropower realtime
 
-    QString variableid="193";
-    QString startTime="2021-03-18T22:00:00Z";
-    QString endTime="2021-03-19T04:00:00Z";
+
+
+    //QString variableid="193";
+    //QString startTime="2021-03-18T22:00:00Z";
+    //QString endTime="2021-03-19T04:00:00Z";
     QString headerName="x-api-key";
     QString headerValue="4uVZ5S0eNy7TcaGiVZtKf2T9OLDc8UpA1BBqetem";
+    QUrl moi;
 
-    QUrl url("https://api.fingrid.fi/v1/variable/"+variableid+"/events/csv?start_time="
-             +startTime+"&end_time="+endTime);
+    QString urlText;
+    if(startTime=="dd-mm-yyyy"||endTime=="dd-mm-yyyy"){
+         urlText="https://api.fingrid.fi/v1/variable/193/event/csv";
 
+    }else{
+         urlText="https://api.fingrid.fi/v1/variable/"+variableid+"/events/csv?start_time="+startTime+"&end_time="+endTime;
+    }
+    QUrl url(urlText);
+
+
+    //QUrl url("https://api.fingrid.fi/v1/variable/193/event/csv");
     QNetworkRequest request(url);
     request.setRawHeader(headerName.toUtf8(), headerValue.toUtf8());
     man->get(request);
 }
 
+std::map<QString, int> FinGridAPI::giveRequestData()
+{
+    return requestData_;
+}
+
 void FinGridAPI::downloadFinished(QNetworkReply * reply)
 {
-
-
     QVariant statuscodeVariant{ reply->attribute(QNetworkRequest::HttpStatusCodeAttribute) };
     int currentStatuscode_ = statuscodeVariant.toInt();
 
@@ -44,8 +60,8 @@ void FinGridAPI::downloadFinished(QNetworkReply * reply)
     QString currentContent_ = QString(responseContent);
     qDebug()<<"Koodi:"<<currentStatuscode_;
 
-    QJsonDocument document = QJsonDocument::fromJson(reply->readAll());
-    QJsonObject root = document.object();
+    //QJsonDocument document = QJsonDocument::fromJson(reply->readAll());
+    //QJsonObject root = document.object();
 
     QByteArrayList list=responseContent.split('\n');
     bool skippedFirst=false;
@@ -53,21 +69,26 @@ void FinGridAPI::downloadFinished(QNetworkReply * reply)
     QByteArrayList currentItem;
 
     for(auto i : list){
+
         if(!skippedFirst){
             skippedFirst=true;
             continue;
         }
+
+        //checks if item is empty
         if(i==""){
             continue;
         }
         currentItem=i.split(',');
 
+        //adds item to map
         if(!currentItem.isEmpty()){
             auto time=currentItem.at(0);
             auto value=currentItem.at(2);
-
+            requestData_[time]=value.toInt();
             qDebug()<<"time:"<<time<<"value: "<<value;
         }
-
     }
+    //emit dataIsReady();
+    reply->close();
 }
