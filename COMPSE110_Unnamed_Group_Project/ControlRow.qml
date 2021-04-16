@@ -51,7 +51,13 @@ Row {
         width: 200
         model: [ "Tampere", "Rovaniemi", "Helsinki" ]
     }
+
     DatePicker{
+        id: datepicker
+        anchors.top: parent.bottom
+    }
+
+    /*DatePicker{
         id: startDatePicker
         objectName: "startDatePicker"
         anchors.top: parent.bottom
@@ -62,7 +68,7 @@ Row {
         objectName: "endDatePicker"
         anchors.top: parent.bottom
         buttonText: "End date"
-    }
+    }*/
 
     /*TextField {
         id: startTimeSelector
