@@ -54,6 +54,7 @@ Row {
 
     DatePicker{
         id: datepicker
+        objectName: "DatePicker"
         anchors.top: parent.bottom
     }
 

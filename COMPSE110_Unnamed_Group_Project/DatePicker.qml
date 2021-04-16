@@ -48,7 +48,7 @@ Item {
                minimumDate: "1900-01-01"
                maximumDate: endCal.selectedDate
 
-               onClicked:  {
+               onSelectedDateChanged:  {
                    startCal.visible=false
                    textStartDate.text=Qt.formatDate(startCal.selectedDate, "dd-MM-yyyy")
                    //controller.setStartDate(Qt.formatDate(startCal.selectedDate, "yyyy-MM-dd"))
@@ -97,7 +97,7 @@ Item {
                minimumDate: startCal.selectedDate
                maximumDate: new Date().toLocaleString(Qt.locale("fi_FI"), "yyyy-MM-dd")
 
-               onClicked:  {
+               onSelectedDateChanged:  {
                    endCal.visible=false
                    textEndDate.text=Qt.formatDate(endCal.selectedDate, "dd-MM-yyyy")
                    //controller.setEndDate(Qt.formatDate(endCal.selectedDate, "yyyy-MM-dd"))

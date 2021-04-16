@@ -240,10 +240,11 @@ Window {
                     if( currentChild.objectName === "placeSelector") {
                         controller.editSettingsValue(currentChild.objectName,
                                                      currentChild.currentIndex)
-                    } else if ( currentChild.objectName === "startDatePicker" ||
-                               currentChild.objectName === "endDatePicker" ) {
-                        controller.editSettingsValue(currentChild.objectName,
-                                                     currentChild.text)
+                    } else if ( currentChild.objectName === "DatePicker") {
+                        controller.editSettingsValue("startDate",
+                                                     currentChild.startDate);
+                        controller.editSettingsValue("endDate",
+                                                     currentChild.endDate)
                     }
                 }
             }
@@ -263,16 +264,17 @@ Window {
                     current.checked = controller.fetchSettingsValue(current.objectName + "Checked");
                 }
 
-            // Load place from Settings
+                // Load place and dates from Settings
                 for( var child in controlRow.children) {
                     var currentChild = controlRow.children[child];
 
                     if( currentChild.objectName === "placeSelector") {
                         currentChild.currentIndex = controller.fetchSettingsValue(currentChild.objectName);
-                    } else if ( currentChild.objectName === "startDatePicker" ||
-                               currentChild.objectName === "endDatePicker" ) {
-                        currentChild.text = controller.fetchSettingsValue(currentChild.objectName);
-
+                    } else if (currentChild.objectName === "DatePicker") {
+                        // endDate loaded twice to bypass calendar min/max value
+                        currentChild.endDate = controller.fetchSettingsValue("endDate");
+                        currentChild.startDate = controller.fetchSettingsValue("startDate");
+                        currentChild.endDate = controller.fetchSettingsValue("endDate");
                     }
                 }
 
