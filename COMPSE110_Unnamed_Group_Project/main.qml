@@ -55,13 +55,23 @@ Window {
                     max: graph_scale_v
                 }
             }
+
+            // Cloudiness
+            LineSeries {
+                id: cloudiness;
+                objectName: "cloudiness"
+                axisY: ValueAxis {
+                    min: 0
+                    max: graph_scale_v
+                }
+            }
         }
 
         // Chart for power consumption data
         ChartElement {
             id: consumptionGraph
             objectName: "consumptionGraph"
-            title: "Power consumption"
+            title: "Power consumption and production"
 
             // General consumption
             LineSeries {
@@ -72,13 +82,6 @@ Window {
                     max: graph_scale_v
                 }
             }
-        }
-
-        // Chart for separation between power production types
-        ChartElement {
-            id: productionGraph
-            objectName: "productionGraph"
-            title: "Power production"
 
             // General production
             LineSeries {
@@ -101,6 +104,7 @@ Window {
                 id: waterProduction;
                 objectName: "waterProduction"
             }
+
             StackedBarSeries {
                 property var waterAmo: []
                 property var windAmo: []
@@ -111,6 +115,34 @@ Window {
                 BarSet { id: windBar; label: "Wind"; values: productionPercentages.windAmo}
                 BarSet { id: nuclBar; label: "Nuclear"; values: productionPercentages.nuclAmo}
             }
+        }
+
+        // Chart for separation between power production types
+        ChartElement {
+            id: historyGraph
+            objectName: "historyGraph"
+            title: "Saved history"
+
+            // General consumption
+            LineSeries {
+                id: totalConsumptionHistory;
+                objectName: "totalConsumptionHistory"
+                axisY: ValueAxis {
+                    min: 0
+                    max: graph_scale_v
+                }
+            }
+
+            // General production
+            LineSeries {
+                id: totalProductionHistory;
+                objectName: "totalProductionHistory"
+                axisY: ValueAxis {
+                    min: 0
+                    max: graph_scale_v
+                }
+            }
+
         }
     }
     Row {
@@ -129,6 +161,13 @@ Window {
             linkedSeries: temperature
         }
         GraphCheckBox {
+            id: cloudBox
+            objectName: "cloudBox"
+            text: qsTr("Cloudiness")
+            checked: false
+            linkedSeries: windSpeed
+        }
+        GraphCheckBox {
             id: windBox
             objectName: "windBox"
             text: qsTr("Wind speed")
@@ -137,7 +176,7 @@ Window {
         }
 
         /* ================================
-         * Middle graph: Consumption values
+         * Middle graph: Consumption and production values
          */
         GraphCheckBox {
             id: consumptionBox
@@ -147,9 +186,6 @@ Window {
             linkedSeries: totalConsumption
         }
 
-        /* ==============================
-         * Right graph: Production values
-         */
         GraphCheckBox {
             id: productionBox
             objectName: "productionBox"
@@ -191,6 +227,25 @@ Window {
                 nuclBar.visible = checkState
             }
             */
+        }
+
+        /* ==============================
+         * Right graph: History
+         */
+        GraphCheckBox {
+            id: consumptionHistoryBox
+            objectName: "consumptionHistoryBox"
+            text: qsTr("Consumption history")
+            checked: false
+            linkedSeries: totalConsumptionHistory
+        }
+
+        GraphCheckBox {
+            id: productionHistoryBox
+            objectName: "productionHistoryBox"
+            text: qsTr("Production history")
+            checked: false
+            linkedSeries: totalProductionHistory
         }
 
     }
