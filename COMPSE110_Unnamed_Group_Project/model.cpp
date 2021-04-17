@@ -8,20 +8,14 @@
 #include "DownLoader.h"
 
 Model::Model(std::shared_ptr<DownLoader> downloader) :
-    downloader_(downloader)
+    downloader_(downloader),
+    urlFMI_("http://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::simple&timestep=60&parameters=t2m,ws_10min,n_man")
 {
 }
 
-void Model::fetchData(QString url, QString place, QString startTime, QString endTime)
+void Model::fetchData()
 {
-    //This is just an example how to use urlModifier and will be removed later!
-    std::vector<QString> querys;
-    querys.push_back("place=" + place);
-    querys.push_back("starttime=" + startTime);
-    querys.push_back("endTime=" + endTime);
-
-    QString urlNew = urlModifier(url, querys);
-
+    QString urlNew = urlModifier(urlFMI_);
     downloader_->load(urlNew);
 }
 
@@ -188,26 +182,17 @@ bool Model::XMLparser()
 /*
  * Modifies url with given querys and returns modified(new) url
  */
-QString Model::urlModifier(QString url, std::vector<QString> querys)
+QString Model::urlModifier(QString url)
 {
-
     QUrl urlNew(url);
     QUrlQuery query(urlNew.query());
 
     //Modify every query separately
-    for (QString oneQuery : querys) {
-        //split oneQuery to separate key and value (ie. {"place", "Tampere"})
-        QStringList keyAndValue = oneQuery.split("=");
-        //Checks that splitting is succesful.
-        if(keyAndValue.length() != 2) {
-            qDebug() << "urlModifier FAILED! Error in splitting with '='. "
-                        "Expected length 2, got: " << keyAndValue.length();
-            return url;
-        }
+    for (auto oneQuery : parameters_) {
         //Removes old query if it exists
-        query.removeQueryItem(keyAndValue[0]);
+        query.removeQueryItem(oneQuery.first);
         //Adds new query (key and value)
-        query.addQueryItem(keyAndValue[0], keyAndValue[1]);
+        query.addQueryItem(oneQuery.first, oneQuery.second);
     }
     urlNew.setQuery(query);
     qDebug() << urlNew;

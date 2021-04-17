@@ -55,6 +55,11 @@ Item {
                                            (startCal.selectedDate, "yyyy-MM-dd"));
 
                }
+               // Add initial value to parameters_ in model
+               Component.onCompleted: {
+                   controller.setParameter("starttime", Qt.formatDate
+                                           (startCal.selectedDate, "yyyy-MM-dd"));
+               }
     }
 
     TextField {
@@ -104,6 +109,11 @@ Item {
                    controller.setParameter("endtime", Qt.formatDate
                                            (endCal.selectedDate, "yyyy-MM-dd"));
 
+               }
+               // Add initial value to parameters_ in model
+               Component.onCompleted: {
+                   controller.setParameter("endtime", Qt.formatDate
+                                           (endCal.selectedDate, "yyyy-MM-dd"));
                }
     }
 }

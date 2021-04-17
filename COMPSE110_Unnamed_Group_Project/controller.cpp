@@ -13,9 +13,9 @@ Controller::Controller(std::shared_ptr<Model> model, std::shared_ptr<Storage> st
 {
 }
 
-void Controller::fetchData(QString url, QString place, QString startTime, QString endTime)
+void Controller::fetchData()
 {
-    model_->fetchData(url, place, startTime, endTime);
+    model_->fetchData();
 }
 
 // Render weather data to application UI graphs.

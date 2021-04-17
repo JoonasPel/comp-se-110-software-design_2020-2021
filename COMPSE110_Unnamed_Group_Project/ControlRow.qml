@@ -28,7 +28,7 @@ Row {
         anchors.top: parent.bottom
 
         onClicked: {
-            controller.fetchData("http://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::simple&timestep=60&parameters=t2m,ws_10min,n_man", placeSelector.currentText, datepicker.startDate.date);
+            controller.fetchData();
             controller.renderData(weatherGraph.objectName, temperature.objectName);
             controller.renderData(weatherGraph.objectName, windSpeed.objectName);
             // controller.renderData(consumptionGraph.objectName, consumptionGraph.childSeries.objectName);
@@ -51,6 +51,10 @@ Row {
         width: 200
         model: [ "Tampere", "Rovaniemi", "Helsinki" ]
         onActivated: {
+            controller.setParameter("place", placeSelector.currentText);
+        }
+        // Add initial value to parameters_ in model
+        Component.onCompleted: {
             controller.setParameter("place", placeSelector.currentText);
         }
     }
