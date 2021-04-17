@@ -8,13 +8,13 @@
 #include <vector>
 #include <QQmlApplicationEngine>
 
-class DownLoader;
+class fmiAPI;
 
 class Model : public QObject
 {
     Q_OBJECT
 public:
-    explicit Model(std::shared_ptr<DownLoader> downloader, QObject *parent = nullptr);
+    explicit Model(std::shared_ptr<fmiAPI> downloader, QObject *parent = nullptr);
 
     void fetchData();
     QList<QPointF> getPointSeries(QString name);
@@ -25,13 +25,10 @@ signals:
     void fetchCompleted();
 
 private:
-    bool XMLparser();
     QString urlModifier(QString);
 
-    std::shared_ptr<DownLoader> downloader_;
-    std::map<QString,std::map<QString,QString>> structure_;
+    std::shared_ptr<fmiAPI> fmiapi_;
     std::map<QString, QString> parameters_;
-    QString urlFMI_;
 
 };
 

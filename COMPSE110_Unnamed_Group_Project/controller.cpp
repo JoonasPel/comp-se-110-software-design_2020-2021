@@ -28,7 +28,7 @@ void Controller::fetchData()
 // Render weather data to application UI graphs.
 void Controller::renderData(QString chart_name, QString series_name)
 {
-    model_->renderData(chart_name, series_name, engine_);
+    //model_->renderData(chart_name, series_name, engine_);
 }
 
 void Controller::editSettingsValue(QString key, QVariant value)

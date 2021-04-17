@@ -12,7 +12,7 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include <DownLoader.h>
+#include <fmiAPI.h>
 #include <controller.h>
 #include <model.h>
 #include <storage.h>
@@ -32,8 +32,8 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-    auto downloader{ std::make_shared<DownLoader>() };
-    auto model{ std::make_shared<Model>(downloader) };
+    auto fmiapi{ std::make_shared<fmiAPI>() };
+    auto model{ std::make_shared<Model>(fmiapi) };
     auto storage{ std::make_shared<Storage>() };
     auto controller{ std::make_shared<Controller>(model, storage, &engine) };
 

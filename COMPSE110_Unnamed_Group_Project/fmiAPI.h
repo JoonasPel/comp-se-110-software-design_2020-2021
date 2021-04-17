@@ -8,12 +8,12 @@
 class QNetworkAccessManager;
 class QFormLayout;
 
-class DownLoader :public QWidget
+class fmiAPI :public QWidget
 {
     Q_OBJECT
 public:
-    explicit DownLoader(QWidget *parent = nullptr);
-    Q_INVOKABLE void load(const QString &url);
+    explicit fmiAPI(QWidget *parent = nullptr);
+    Q_INVOKABLE void load(std::map<QString, QString>);
 
 signals:
     void fetchCompleted();
@@ -24,6 +24,11 @@ private Q_SLOTS:
 private:
     QFormLayout *form;
     QNetworkAccessManager *network;
+    QString urlFMI;
+    bool XMLparser(QNetworkReply*);
+    //structure to save parsed data
+    std::map<QString,std::map<QString,QString>> structure_;
+    QString urlModifier(std::map<QString, QString>);
 };
 
 
