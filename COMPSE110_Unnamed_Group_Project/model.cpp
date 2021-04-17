@@ -8,18 +8,18 @@
 #include "DownLoader.h"
 
 
-Model::Model(std::shared_ptr<DownLoader> downloader) :
+Model::Model(std::shared_ptr<DownLoader> downloader, QObject* parent) :
+    QObject{ parent },
     downloader_(downloader),
     urlFMI_("http://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::simple&timestep=60&parameters=t2m,ws_10min,n_man")
 {
+    connect(downloader_.get(), SIGNAL(fetchCompleted()), this, SIGNAL(fetchCompleted()));
 }
 
 void Model::fetchData()
 {
     QString urlNew = urlModifier(urlFMI_);
     downloader_->load(urlNew);
-
-
 }
 
 /*
@@ -61,6 +61,7 @@ void Model::renderData(QString chart_name, QString series_name, QQmlApplicationE
     // Get points by parameter.
     if(series_name == "temperature") { paramName = "t2m"; }
     else if (series_name == "windSpeed") { paramName = "ws_10min"; }
+    else if (series_name == "cloudiness") { paramName = "n_man"; }
 
     // If no proper series is specified do nothing.
     else {

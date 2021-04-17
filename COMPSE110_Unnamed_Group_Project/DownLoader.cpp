@@ -33,5 +33,6 @@ void DownLoader::downloadCompleted(QNetworkReply *reply)
     reply->deleteLater();
 
     qDebug() << "Fetching ready!";
+    emit fetchCompleted();
 }
 

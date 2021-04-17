@@ -30,10 +30,18 @@ public:
 
     Q_INVOKABLE void setParameter(QString name, QString value);
 
+    // For connecting signal to render Data after download is complete.
+    // Must be invoked after QWidgets are populated.
+    Q_INVOKABLE void connectSignal();
+
+signals:
+    void fetchCompleted();
+
 private:
     std::shared_ptr<Model> model_;
     std::shared_ptr<Storage> storage_;
     QQmlApplicationEngine* engine_;
+    bool connected = false;
 };
 
 #endif // CONTROLLER_H

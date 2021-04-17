@@ -23,16 +23,25 @@ Row {
     */
 
     Button {
+        objectName: "fetchButton"
         font.pointSize: 20
         text: "Fetch from FMI and Render"
         anchors.top: parent.bottom
 
         onClicked: {
+            controller.connectSignal();
             controller.fetchData();
-            controller.renderData(weatherGraph.objectName, temperature.objectName);
-            controller.renderData(weatherGraph.objectName, windSpeed.objectName);
             // controller.renderData(consumptionGraph.objectName, consumptionGraph.childSeries.objectName);
             // controller.renderData(productionGraph.objectName, productionGraph.childSeries.objectName);
+        }
+        signal renderData();
+        onRenderData: {
+            controller.renderData(weatherGraph.objectName, temperature.objectName);
+            controller.renderData(weatherGraph.objectName, windSpeed.objectName);
+            controller.renderData(weatherGraph.objectName, cloudiness.objectName);
+        }
+        // Connect render on download ready signal.
+        Component.onCompleted: {
         }
     }
     Slider {

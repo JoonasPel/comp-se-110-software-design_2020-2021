@@ -3,7 +3,7 @@
 #include "storage.h"
 
 #include <iostream>
-#include "renderelectricitydata.hh"
+//#include "renderelectricitydata.hh"
 
 Controller::Controller(std::shared_ptr<Model> model, std::shared_ptr<Storage> storage, QQmlApplicationEngine *engine,
                        QObject *parent) :
@@ -12,10 +12,16 @@ Controller::Controller(std::shared_ptr<Model> model, std::shared_ptr<Storage> st
     storage_{ storage },
     engine_{ engine }
 {
+    connect(model_.get(), SIGNAL(fetchCompleted()), this, SIGNAL(fetchCompleted()));
+    connected = false;
 }
 
 void Controller::fetchData()
 {
+    if(!connected) {
+        connectSignal();
+    }
+
     model_->fetchData();
 }
 
@@ -39,4 +45,10 @@ QVariant Controller::fetchSettingsValue(QString key)
 void Controller::setParameter(QString name, QString value)
 {
     model_->setParameter(name, value);
+}
+
+void Controller::connectSignal()
+{
+    connected = true;
+    connect(this, SIGNAL(fetchCompleted()), engine_->rootObjects().at(0)->findChild<QObject*>("fetchButton"), SIGNAL(renderData()));
 }

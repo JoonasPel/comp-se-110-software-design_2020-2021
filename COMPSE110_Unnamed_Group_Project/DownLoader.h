@@ -15,6 +15,9 @@ public:
     explicit DownLoader(QWidget *parent = nullptr);
     Q_INVOKABLE void load(const QString &url);
 
+signals:
+    void fetchCompleted();
+
 private Q_SLOTS:
     void downloadCompleted(QNetworkReply *);
 

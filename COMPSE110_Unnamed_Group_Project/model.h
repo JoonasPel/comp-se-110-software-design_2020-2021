@@ -10,15 +10,19 @@
 
 class DownLoader;
 
-class Model
+class Model : public QObject
 {
+    Q_OBJECT
 public:
-    explicit Model(std::shared_ptr<DownLoader> downloader);
+    explicit Model(std::shared_ptr<DownLoader> downloader, QObject *parent = nullptr);
 
     void fetchData();
     QList<QPointF> getPointSeries(QString name);
     void renderData(QString chart_name, QString series_name, QQmlApplicationEngine* engine);
     void setParameter(QString name, QString value);
+
+signals:
+    void fetchCompleted();
 
 private:
     bool XMLparser();
