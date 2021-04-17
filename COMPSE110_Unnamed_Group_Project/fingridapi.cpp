@@ -92,7 +92,7 @@ void FinGridAPI::downloadFinished(QNetworkReply * reply)
         if(!currentItem.isEmpty()){
             auto time=currentItem.at(0);
             auto value=currentItem.at(2);
-            requestData_[time]=value.toInt();
+            requestData_[time]=value.toDouble();
             //qDebug()<<"time:"<<time<<"value: "<<value;
         }
     }
