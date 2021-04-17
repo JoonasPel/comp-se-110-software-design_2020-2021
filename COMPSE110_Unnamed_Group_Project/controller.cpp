@@ -3,6 +3,7 @@
 #include "storage.h"
 
 #include <iostream>
+#include "renderelectricitydata.hh"
 
 Controller::Controller(std::shared_ptr<Model> model, std::shared_ptr<Storage> storage, QQmlApplicationEngine *engine,
                        QObject *parent) :

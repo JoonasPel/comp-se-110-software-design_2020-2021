@@ -7,6 +7,7 @@
 #include "model.h"
 #include "DownLoader.h"
 
+
 Model::Model(std::shared_ptr<DownLoader> downloader) :
     downloader_(downloader),
     urlFMI_("http://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::simple&timestep=60&parameters=t2m,ws_10min,n_man")
@@ -17,6 +18,8 @@ void Model::fetchData()
 {
     QString urlNew = urlModifier(urlFMI_);
     downloader_->load(urlNew);
+
+
 }
 
 /*
