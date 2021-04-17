@@ -23,7 +23,10 @@ void FinGridAPI::downloadData(QString startTime,QString endTime, QString variabl
     //188: nuclear production real time data
     //191: hydropower realtime
 
-
+    //forecast
+    //245:wind updated hourly
+    //165: Electricity consumption forecast for the next 24 hours
+    //242: A tentative production prediction for the next 24
 
     //QString variableid="193";
     //QString startTime="2021-03-18T22:00:00Z";

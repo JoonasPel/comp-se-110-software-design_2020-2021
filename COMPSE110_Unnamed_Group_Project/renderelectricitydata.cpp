@@ -4,6 +4,7 @@
 #include <QList>
 #include <QPointF>
 #include <QtCharts>
+#include <QTime>
 
 renderElectricityData::renderElectricityData(QQmlApplicationEngine *engine,QWidget* parent)
     :QWidget(parent),engine{engine}
@@ -15,11 +16,25 @@ renderElectricityData::renderElectricityData(QQmlApplicationEngine *engine,QWidg
 
 void renderElectricityData::fetchData(QString startTime, QString endTime, QString type)
 {
+    //
     allCurrentData.clear();
     std::vector<QString> types={"193","191","192","188","181"};
     for(auto i : types){
         fingrid_->downloadData(startTime,endTime,i);
     }
+    //forecast
+
+    QDateTime now = QDateTime::currentDateTime();
+
+    //create start and end times for forecast
+    //renEl->fetchData("2021-03-18T22:00:00Z","2021-03-19T04:00:00Z");
+
+
+    qDebug()<<now.date().toString()+"T"+now.time().toString();
+
+
+
+
 }
 
 void renderElectricityData::render(std::map<QString,double> dataPoints,QString urlType)

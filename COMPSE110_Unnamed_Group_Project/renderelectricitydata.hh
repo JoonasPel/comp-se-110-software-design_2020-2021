@@ -14,6 +14,8 @@ class renderElectricityData: public QWidget
 public:
     renderElectricityData(QQmlApplicationEngine *engine,QWidget* parent = nullptr);
     void fetchData(QString startTime, QString endTime,QString type="");
+
+    void fetchForecastData();
     
 
 public slots:
