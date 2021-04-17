@@ -46,7 +46,7 @@ void FinGridAPI::downloadData(QString startTime,QString endTime, QString variabl
     man->get(request);
 }
 
-std::map<QString, int> FinGridAPI::giveRequestData()
+std::map<QString, double> FinGridAPI::giveRequestData()
 {
     return requestData_;
 }
@@ -59,6 +59,13 @@ void FinGridAPI::downloadFinished(QNetworkReply * reply)
     QByteArray responseContent{ reply->readAll() };
     QString currentContent_ = QString(responseContent);
     qDebug()<<"Koodi:"<<currentStatuscode_;
+
+    QString url =reply->url().toString();
+
+    auto url2=url.split("/variable/");
+    auto url3= url2[1].split("/events");
+
+    QString urlType=url3[0];
 
     //QJsonDocument document = QJsonDocument::fromJson(reply->readAll());
     //QJsonObject root = document.object();
@@ -86,9 +93,10 @@ void FinGridAPI::downloadFinished(QNetworkReply * reply)
             auto time=currentItem.at(0);
             auto value=currentItem.at(2);
             requestData_[time]=value.toInt();
-            qDebug()<<"time:"<<time<<"value: "<<value;
+            //qDebug()<<"time:"<<time<<"value: "<<value;
         }
     }
-    //emit dataIsReady();
+    emit dataIsReady(requestData_,urlType);
     reply->close();
 }
+

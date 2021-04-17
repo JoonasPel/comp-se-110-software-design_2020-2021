@@ -13,7 +13,9 @@ HEADERS= DownLoader.h \
     controller.h \
     model.h \
     storage.h \
-    fingridapi.hh
+    fingridapi.hh \
+    renderelectricitydata.hh
+
 
 SOURCES += \
         controller.cpp \
@@ -21,7 +23,8 @@ SOURCES += \
         DownLoader.cpp \
         model.cpp \
         storage.cpp \
-        fingridapi.cpp
+        fingridapi.cpp \
+        renderelectricitydata.cpp
 
 RESOURCES += qml.qrc
 
