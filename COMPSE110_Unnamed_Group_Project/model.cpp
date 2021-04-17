@@ -7,6 +7,7 @@
 #include "model.h"
 #include "DownLoader.h"
 
+
 Model::Model(std::shared_ptr<DownLoader> downloader) :
     downloader_(downloader)
 {
@@ -23,6 +24,8 @@ void Model::fetchData(QString url, QString place, QString startTime, QString end
     QString urlNew = urlModifier(url, querys);
 
     downloader_->load(urlNew);
+
+
 }
 
 /*

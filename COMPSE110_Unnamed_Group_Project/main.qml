@@ -79,7 +79,12 @@ Window {
                 objectName: "totalConsumption"
                 axisY: ValueAxis {
                     min: 0
-                    max: graph_scale_v
+                    //max: graph_scale_v
+                    max: 13000
+                }
+                axisX:ValueAxis{
+                    min:1
+                    max:120
                 }
             }
 
@@ -87,10 +92,12 @@ Window {
             LineSeries {
                 id: totalProduction;
                 objectName: "totalProduction"
+                /**
                 axisY: ValueAxis {
                     min: 0
                     max: graph_scale_v
                 }
+                **/
             }
             LineSeries {
                 id: nuclearProduction;

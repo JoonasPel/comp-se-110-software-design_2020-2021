@@ -12,6 +12,7 @@ CONFIG += c++11
 HEADERS= DownLoader.h \
     controller.h \
     model.h \
+    renderelectricitydata.hh \
     storage.h \
     fingridapi.hh
 
@@ -20,6 +21,7 @@ SOURCES += \
         main.cpp \
         DownLoader.cpp \
         model.cpp \
+        renderelectricitydata.cpp \
         storage.cpp \
         fingridapi.cpp
 

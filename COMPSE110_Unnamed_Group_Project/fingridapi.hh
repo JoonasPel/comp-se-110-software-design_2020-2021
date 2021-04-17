@@ -10,21 +10,22 @@ class QFormLayout;
 
 class FinGridAPI:public QWidget
 {
+    Q_OBJECT
 public:
     FinGridAPI(QWidget* parent = nullptr);
     void downloadData(QString startTime,QString endTime, QString variableid);
     //return requested data.
-    std::map<QString,int> giveRequestData();
+    std::map<QString,double> giveRequestData();
 
 signals:
-    void dataIsReady();
+    void dataIsReady(std::map<QString,double>,QString urlType);
 
 private Q_SLOTS:
     void downloadFinished(QNetworkReply*);
 
 private:
     QNetworkAccessManager* man;
-    std::map<QString,int> requestData_;
+    std::map<QString,double> requestData_;
 };
 
 #endif // FINGRIDAPI_HH

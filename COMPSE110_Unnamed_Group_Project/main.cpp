@@ -16,6 +16,7 @@
 #include <controller.h>
 #include <model.h>
 #include <storage.h>
+#include "renderelectricitydata.hh"
 
 int main(int argc, char *argv[])
 {
@@ -48,6 +49,13 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     engine.load(url);
+
+
+    //auto renEl{std::make_shared<renderElectricityData>(&engine)};
+    //renEl->fetchData("2021-03-18T22:00:00Z","2021-03-19T04:00:00Z");
+
+
+
 
     return app.exec();
 }
