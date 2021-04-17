@@ -165,7 +165,7 @@ Window {
             objectName: "cloudBox"
             text: qsTr("Cloudiness")
             checked: false
-            linkedSeries: windSpeed
+            linkedSeries: cloudiness
         }
         GraphCheckBox {
             id: windBox
