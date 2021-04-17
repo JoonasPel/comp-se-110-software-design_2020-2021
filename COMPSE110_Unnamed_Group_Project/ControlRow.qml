@@ -28,7 +28,7 @@ Row {
         anchors.top: parent.bottom
 
         onClicked: {
-            controller.fetchData("http://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::simple&timestep=60&parameters=t2m,ws_10min,n_man", placeSelector.currentText, startDatePicker.text, endDatePicker.text);
+            controller.fetchData("http://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::simple&timestep=60&parameters=t2m,ws_10min,n_man", placeSelector.currentText, datepicker.startDate.date);
             controller.renderData(weatherGraph.objectName, temperature.objectName);
             controller.renderData(weatherGraph.objectName, windSpeed.objectName);
             // controller.renderData(consumptionGraph.objectName, consumptionGraph.childSeries.objectName);
@@ -50,6 +50,9 @@ Row {
         anchors.top: parent.bottom
         width: 200
         model: [ "Tampere", "Rovaniemi", "Helsinki" ]
+        onActivated: {
+            controller.setParameter("place", placeSelector.currentText);
+        }
     }
 
     DatePicker{

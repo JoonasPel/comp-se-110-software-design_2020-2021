@@ -40,3 +40,8 @@ QVariant Controller::fetchSettingsValue(QString key)
 {
     return storage_->fetchValue(key);
 }
+
+void Controller::setParameter(QString name, QString value)
+{
+    model_->setParameter(name, value);
+}

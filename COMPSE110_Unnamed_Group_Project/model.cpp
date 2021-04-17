@@ -104,6 +104,12 @@ void Model::renderData(QString chart_name, QString series_name, QQmlApplicationE
     }
 }
 
+void Model::setParameter(QString name, QString value)
+{
+    parameters_[name] = value;
+    qDebug() << "model.cpp parameters_ change:" << name << value;
+}
+
 /*
  * //Parse xml file and save data to structure_
  */
