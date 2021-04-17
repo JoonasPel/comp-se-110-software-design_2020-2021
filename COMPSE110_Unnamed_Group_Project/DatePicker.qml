@@ -51,7 +51,8 @@ Item {
                onSelectedDateChanged:  {
                    startCal.visible=false
                    textStartDate.text=Qt.formatDate(startCal.selectedDate, "dd-MM-yyyy")
-                   //controller.setStartDate(Qt.formatDate(startCal.selectedDate, "yyyy-MM-dd"))
+                   controller.setParameter("starttime", Qt.formatDate
+                                           (startCal.selectedDate, "yyyy-MM-dd"));
 
                }
     }
@@ -100,7 +101,8 @@ Item {
                onSelectedDateChanged:  {
                    endCal.visible=false
                    textEndDate.text=Qt.formatDate(endCal.selectedDate, "dd-MM-yyyy")
-                   //controller.setEndDate(Qt.formatDate(endCal.selectedDate, "yyyy-MM-dd"))
+                   controller.setParameter("endtime", Qt.formatDate
+                                           (endCal.selectedDate, "yyyy-MM-dd"));
 
                }
     }

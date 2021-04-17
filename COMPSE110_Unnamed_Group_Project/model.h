@@ -18,6 +18,7 @@ public:
     void fetchData(QString url, QString place, QString startTime, QString endTime);
     QList<QPointF> getPointSeries(QString name);
     void renderData(QString chart_name, QString series_name, QQmlApplicationEngine* engine);
+    void setParameter(QString name, QString value);
 
 private:
     bool XMLparser();
@@ -25,6 +26,8 @@ private:
 
     std::shared_ptr<DownLoader> downloader_;
     std::map<QString,std::map<QString,QString>> structure_;
+    std::map<QString, QString> parameters_;
+
 };
 
 #endif // MODEL_H

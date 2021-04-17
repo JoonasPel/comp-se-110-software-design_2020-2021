@@ -28,6 +28,8 @@ public:
     Q_INVOKABLE void editSettingsValue(QString key, QVariant value);
     Q_INVOKABLE QVariant fetchSettingsValue(QString key);
 
+    Q_INVOKABLE void setParameter(QString name, QString value);
+
 private:
     std::shared_ptr<Model> model_;
     std::shared_ptr<Storage> storage_;

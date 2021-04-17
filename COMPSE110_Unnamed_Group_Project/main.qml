@@ -325,6 +325,8 @@ Window {
 
                     if( currentChild.objectName === "placeSelector") {
                         currentChild.currentIndex = controller.fetchSettingsValue(currentChild.objectName);
+                        // update place to parameters_ in model
+                        controller.setParameter("place", currentChild.currentText);
                     } else if (currentChild.objectName === "DatePicker") {
                         // endDate loaded twice to bypass calendar min/max value
                         currentChild.endDate = controller.fetchSettingsValue("endDate");
