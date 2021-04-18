@@ -85,7 +85,7 @@ void Model::renderData(QString chart_name, QString series_name, QQmlApplicationE
     if(series_name == "temperature") { paramName = "t2m"; }
     else if (series_name == "windSpeed") { paramName = "ws_10min"; }
     else if (series_name == "cloudiness") { paramName = "n_man"; }
-    else if (series_name == "weatherForecast") { paramName = "temperature"; }
+    else if (series_name == "weatherForecast") { paramName = "Temperature"; }
 
     // If no proper series is specified do nothing.
     else {
