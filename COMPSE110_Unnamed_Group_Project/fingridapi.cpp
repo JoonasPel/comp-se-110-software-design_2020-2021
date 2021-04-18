@@ -29,7 +29,7 @@ void FinGridAPI::downloadData(QString startTime,QString endTime, QString variabl
     QString headerName="x-api-key";
     QString headerValue="4uVZ5S0eNy7TcaGiVZtKf2T9OLDc8UpA1BBqetem";
     QUrl moi;
-
+    //qDebug()<<
     QString urlText;
     if(startTime=="dd-mm-yyyy"||endTime=="dd-mm-yyyy"||startTime==""){
          urlText="https://api.fingrid.fi/v1/variable/"+variableid+"/event/csv";
@@ -46,10 +46,7 @@ void FinGridAPI::downloadData(QString startTime,QString endTime, QString variabl
     man->get(request);
 }
 
-std::map<QString, double> FinGridAPI::giveRequestData()
-{
-    return requestData_;
-}
+
 
 void FinGridAPI::downloadFinished(QNetworkReply * reply)
 {
@@ -67,6 +64,7 @@ void FinGridAPI::downloadFinished(QNetworkReply * reply)
 
     QString urlType=url3[0];
 
+    std::map<QString,double> requestData_;
 
     //QJsonDocument document = QJsonDocument::fromJson(reply->readAll());
     //QJsonObject root = document.object();
@@ -94,19 +92,24 @@ void FinGridAPI::downloadFinished(QNetworkReply * reply)
             auto time=currentItem.at(0);
             auto value=currentItem.at(2);
             requestData_[time]=value.toDouble();
-            qDebug()<<"time:"<<time<<"value: "<<value;
+            //qDebug()<<"time:"<<time<<"value: "<<value;
         }
     }
     QString seriesName=getSeriesName(urlType);
     //emit dataIsReady(requestData_,urlType);
 
+    //close reply
+    reply->close();
+
+
     if(url.size()<52){
+
         emit currentDataReady(seriesName,requestData_[0]);
         return;
     }
 
     emit dataIsReady(requestData_,seriesName);
-    reply->close();
+
 
 }
 

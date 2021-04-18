@@ -147,7 +147,7 @@ void renderElectricityData::addToChart(QString series_name, QList<QPointF> point
     QAbstractSeries* target_series = nullptr;
 
     int count = view->property("count").toInt();
-
+    qDebug()<<series_name;
 
 
     // Find wanted series by name.

@@ -28,7 +28,7 @@ private Q_SLOTS:
 
 private:
     QNetworkAccessManager* man;
-    std::map<QString,double> requestData_;
+    //std::map<QString,double> requestData_;
 };
 
 #endif // FINGRIDAPI_HH
