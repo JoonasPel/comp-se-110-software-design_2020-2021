@@ -26,6 +26,12 @@ void renderElectricityData::fetchData(QString startTime, QString endTime)
         fingrid_->downloadData(startTime,endTime,i);
     }
 
+
+
+}
+
+void renderElectricityData::fetchForecastData()
+{
     //forecast
     //165: consumption
     //242: A tentative production prediction for the next 24 hours as an hourly energy
@@ -43,7 +49,6 @@ void renderElectricityData::fetchData(QString startTime, QString endTime)
     for(auto j:forecastTypes){
         fingrid_->downloadData(now,DayLaterText,j);
     }
-
 }
 
 void renderElectricityData::getCurrentValues()
