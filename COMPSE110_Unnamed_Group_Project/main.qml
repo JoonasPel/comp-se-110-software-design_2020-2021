@@ -195,7 +195,11 @@ Window {
                 name: "production";
                 axisY: ValueAxis {
                     min: 0
-                    max: graph_scale_v
+                    max: 13000
+                }
+                axisX: ValueAxis {
+                    min: 0
+                    max: 24
                 }
             }
             // Consumption forecast
@@ -205,7 +209,11 @@ Window {
                 name: "consumption";
                 axisY: ValueAxis {
                     min: 0
-                    max: graph_scale_v
+                    max: 13000
+                }
+                axisX: ValueAxis {
+                    min: 0
+                    max: 260
                 }
             }
             Button {
