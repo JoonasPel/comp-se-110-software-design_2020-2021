@@ -50,8 +50,15 @@ Item {
                minimumDate: "1900-01-01"
                maximumDate: endCal.selectedDate
 
-               onSelectedDateChanged:  {
+               onClicked: {
                    startCal.visible=false
+                   textStartDate.text=Qt.formatDate(startCal.selectedDate, "dd-MM-yyyy")
+                   controller.setParameter("starttime", Qt.formatDate
+                                           (startCal.selectedDate, "yyyy-MM-dd")+"T"+startTimeField.timeText+"Z");
+               }
+
+               onSelectedDateChanged:  {
+
                    textStartDate.text=Qt.formatDate(startCal.selectedDate, "dd-MM-yyyy")
                    controller.setParameter("starttime", Qt.formatDate
                                            (startCal.selectedDate, "yyyy-MM-dd")+"T"+startTimeField.timeText+"Z");
@@ -114,8 +121,14 @@ Item {
                minimumDate: startCal.selectedDate
                maximumDate: new Date().toLocaleString(Qt.locale("fi_FI"), "yyyy-MM-dd")
 
-               onSelectedDateChanged:  {
+               onClicked: {
                    endCal.visible=false
+                   textEndDate.text=Qt.formatDate(endCal.selectedDate, "dd-MM-yyyy")
+                   controller.setParameter("endtime", Qt.formatDate
+                                           (endCal.selectedDate, "yyyy-MM-dd")+"T"+endTimeField.timeText+"Z")
+               }
+
+               onSelectedDateChanged:  {
                    textEndDate.text=Qt.formatDate(endCal.selectedDate, "dd-MM-yyyy")
                    controller.setParameter("endtime", Qt.formatDate
                                            (endCal.selectedDate, "yyyy-MM-dd")+"T"+endTimeField.timeText+"Z");
