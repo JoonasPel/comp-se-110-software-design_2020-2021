@@ -13,7 +13,7 @@ class renderElectricityData: public QWidget
 
 public:
     renderElectricityData(QQmlApplicationEngine *engine,QWidget* parent = nullptr);
-    void fetchData(QString startTime, QString endTime,QString type="");
+    void fetchData(QString startTime, QString endTime);
     void fetchForecastData();
 
     void getCurrentValues();
@@ -29,7 +29,7 @@ signals:
 private:
     QList<QPointF> getPointSeries(std::map<QString,double> data);
     void calcPercent();
-    void addToChart(QString series_name,QList<QPointF> points);
+    void addToChart(QString series_name,QList<QPointF> points,QString chart_name="consumptionGraph");
 
     FinGridAPI* fingrid_;
     QQmlApplicationEngine* engine;

@@ -104,10 +104,11 @@ void FinGridAPI::downloadFinished(QNetworkReply * reply)
 
     if(url.size()<52){
 
+
         emit currentDataReady(seriesName,requestData_[0]);
         return;
     }
-
+    qDebug()<<"koko on:"<<requestData_.size();
     emit dataIsReady(requestData_,seriesName);
 
 
@@ -127,6 +128,10 @@ QString FinGridAPI::getSeriesName(QString currentType)
         series_name="windProduction";
     }else if(currentType=="191"){
         series_name="waterProduction";
+    }else if(currentType=="165"){
+        series_name="consumptionForecast";
+    }else if(currentType=="242"){
+        series_name="productionForecast";
     }
     return series_name;
 }
