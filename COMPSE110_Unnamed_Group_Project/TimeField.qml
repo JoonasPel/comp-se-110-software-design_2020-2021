@@ -3,6 +3,7 @@ import QtQuick.Controls 2.7
 
 Item {
     property alias timeText : textEditTD.displayText
+    property alias text : textEditTD.text
     width: 100
     height: 20
 

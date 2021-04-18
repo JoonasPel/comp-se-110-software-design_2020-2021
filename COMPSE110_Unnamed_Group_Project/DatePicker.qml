@@ -8,6 +8,8 @@ Item {
     //property alias endDateText : textEndDate.text
     property alias startDate: startCal.selectedDate
     property alias endDate: endCal.selectedDate
+    property alias startClock: startTimeField.text
+    property alias endClock: endTimeField.text
 
     TextField {
         id: textStartDate

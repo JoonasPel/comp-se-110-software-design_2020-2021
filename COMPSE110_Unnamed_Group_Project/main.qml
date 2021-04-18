@@ -295,7 +295,7 @@ Window {
                     controller.editSettingsValue(current.objectName + "Checked", current.checked);
                 }
 
-            // Save place, start date and end date to Settings
+            // Save place, date and time to Settings
                 for( var child in controlRow.children) {
                     var currentChild = controlRow.children[child];
 
@@ -307,6 +307,10 @@ Window {
                                                      currentChild.startDate);
                         controller.editSettingsValue("endDate",
                                                      currentChild.endDate)
+                        controller.editSettingsValue("startClock",
+                                                     currentChild.startClock)
+                        controller.editSettingsValue("endClock",
+                                                     currentChild.endClock)
                     }
                 }
             }
@@ -326,7 +330,7 @@ Window {
                     current.checked = controller.fetchSettingsValue(current.objectName + "Checked");
                 }
 
-                // Load place and dates from Settings
+                // Load place, date and time from Settings
                 for( var child in controlRow.children) {
                     var currentChild = controlRow.children[child];
 
@@ -339,6 +343,9 @@ Window {
                         currentChild.endDate = controller.fetchSettingsValue("endDate");
                         currentChild.startDate = controller.fetchSettingsValue("startDate");
                         currentChild.endDate = controller.fetchSettingsValue("endDate");
+
+                        currentChild.startClock = controller.fetchSettingsValue("startClock");
+                        currentChild.endClock = controller.fetchSettingsValue("endClock");
                     }
                 }
 
