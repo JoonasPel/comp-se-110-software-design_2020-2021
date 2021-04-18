@@ -17,6 +17,8 @@
 #include <model.h>
 #include <storage.h>
 
+#include "renderelectricitydata.hh"
+
 int main(int argc, char *argv[])
 {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -33,7 +35,8 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 
     auto fmiapi{ std::make_shared<fmiAPI>() };
-    auto model{ std::make_shared<Model>(fmiapi) };
+    auto electricData{std::make_shared<renderElectricityData>(&engine)};
+    auto model{ std::make_shared<Model>(fmiapi,electricData) };
     auto storage{ std::make_shared<Storage>() };
     auto controller{ std::make_shared<Controller>(model, storage, &engine) };
 
@@ -48,6 +51,13 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     engine.load(url);
+
+
+    //auto electricData{std::make_shared<renderElectricityData>(&engine)};
+    //ren->fetchData("2021-03-18T22:00:00Z","2021-03-19T04:00:00Z");
+    electricData->getCurrentValues();
+
+
 
     return app.exec();
 }

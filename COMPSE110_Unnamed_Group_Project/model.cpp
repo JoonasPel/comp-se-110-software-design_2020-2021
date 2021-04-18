@@ -4,11 +4,13 @@
 
 #include "model.h"
 #include "fmiAPI.h"
+#include "renderelectricitydata.hh"
 
 
-Model::Model(std::shared_ptr<fmiAPI> fmiapi, QObject* parent) :
+Model::Model(std::shared_ptr<fmiAPI> fmiapi,std::shared_ptr<renderElectricityData> elecData, QObject* parent) :
     QObject{ parent },
-    fmiapi_(fmiapi)
+    fmiapi_(fmiapi),
+    elecData_(elecData)
 {
     connect(fmiapi_.get(), SIGNAL(fetchCompleted(std::map<QString, std::map<QString, QString>>)),
             this, SLOT(fetchedDataReady(std::map<QString, std::map<QString, QString>>)));
@@ -17,6 +19,8 @@ Model::Model(std::shared_ptr<fmiAPI> fmiapi, QObject* parent) :
 void Model::fetchData()
 {
     fmiapi_->load(parameters_);
+    elecData_->fetchData(parameters_["starttime"],parameters_["endtime"]);
+
 }
 
 void Model::setParameter(QString name, QString value)

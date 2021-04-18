@@ -9,12 +9,12 @@
 #include <QQmlApplicationEngine>
 
 class fmiAPI;
-
+class renderElectricityData;
 class Model : public QObject
 {
     Q_OBJECT
 public:
-    explicit Model(std::shared_ptr<fmiAPI> downloader, QObject *parent = nullptr);
+    explicit Model(std::shared_ptr<fmiAPI> downloader,std::shared_ptr<renderElectricityData> elecData, QObject *parent = nullptr);
 
     void fetchData();
     QList<QPointF> getPointSeries(QString name);
@@ -33,6 +33,7 @@ private:
     std::shared_ptr<fmiAPI> fmiapi_;
     std::map<QString, QString> parameters_;
     std::map<QString,std::map<QString,QString>> fmiData_;
+    std::shared_ptr<renderElectricityData> elecData_;
 
 };
 
