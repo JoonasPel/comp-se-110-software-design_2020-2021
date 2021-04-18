@@ -173,13 +173,18 @@ Window {
         ChartElement {
             id: forecastGraph
             objectName: "forecastGraph"
-            title: "FORECAST"
+            title: "Forecast"
             // Weather forecast
             LineSeries {
                 id: weatherForecast;
                 objectName: "weatherForecast"
-                axisY: ValueAxis {
+                name: "temperature";
+                axisX: ValueAxis {
                     min: 0
+                    max: graph_scale_h * 2
+                }
+                axisY: ValueAxis {
+                    min: -30
                     max: graph_scale_v
                 }
             }
@@ -187,6 +192,7 @@ Window {
             LineSeries {
                 id: productionForecast;
                 objectName: "productionForecast"
+                name: "production";
                 axisY: ValueAxis {
                     min: 0
                     max: graph_scale_v
@@ -196,6 +202,7 @@ Window {
             LineSeries {
                 id: consumptionForecast;
                 objectName: "consumptionForecast"
+                name: "consumption";
                 axisY: ValueAxis {
                     min: 0
                     max: graph_scale_v
