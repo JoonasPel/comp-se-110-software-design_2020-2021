@@ -14,13 +14,17 @@ class renderElectricityData: public QWidget
 public:
     renderElectricityData(QQmlApplicationEngine *engine,QWidget* parent = nullptr);
     void fetchData(QString startTime, QString endTime,QString type="");
-
     void fetchForecastData();
-    
 
+    void getCurrentValues();
+    void currentValuesReady(QString type, double value);
+    
 public slots:
     void render(std::map<QString,double> dataPoints,QString urlType);
     
+
+signals:
+    void readyToRender();
 
 private:
     QList<QPointF> getPointSeries(std::map<QString,double> data);

@@ -6,11 +6,14 @@
 #include <QtCharts>
 #include <QTime>
 
+std::vector<QString> types={"193","191","192","188","181"};
 renderElectricityData::renderElectricityData(QQmlApplicationEngine *engine,QWidget* parent)
     :QWidget(parent),engine{engine}
 {
     fingrid_=new FinGridAPI();
     connect(fingrid_,&FinGridAPI::dataIsReady,this,&renderElectricityData::render);
+    connect(fingrid_,&FinGridAPI::currentDataReady,this,&renderElectricityData::currentValuesReady);
+
     typeCount=0;
 }
 
@@ -18,37 +21,56 @@ void renderElectricityData::fetchData(QString startTime, QString endTime, QStrin
 {
     //
     allCurrentData.clear();
-    std::vector<QString> types={"193","191","192","188","181"};
+
     for(auto i : types){
         fingrid_->downloadData(startTime,endTime,i);
     }
+
     //forecast
+    //165: consumption
+    //242: A tentative production prediction for the next 24 hours as an hourly energy
 
-    QDateTime now = QDateTime::currentDateTime();
+    QDateTime time = QDateTime::currentDateTime();
+    QString now=time.toString("yyyy-dd-mm")+"T"+time.toString("hh:mm:ss")+"Z";
+    auto dayLater=time.addDays(1);
+    QString DayLaterText=dayLater.toString("yyyy-dd-mm")+"T"+dayLater.toString("hh:mm:ss")+"Z";
 
-    //create start and end times for forecast
-    //renEl->fetchData("2021-03-18T22:00:00Z","2021-03-19T04:00:00Z");
+    /**
+    std::vector<QString> forecastTypes={"165","242"};
+    for(auto j:forecastTypes){
+        fingrid_->downloadData(now,DayLaterText,j);
+    }
+    **/
+}
 
-
-    qDebug()<<now.date().toString()+"T"+now.time().toString();
-
-
-
+void renderElectricityData::getCurrentValues()
+{
+    for(auto i:types){
+        fingrid_->downloadData("","",i);
+    }
 
 }
 
-void renderElectricityData::render(std::map<QString,double> dataPoints,QString urlType)
+void renderElectricityData::currentValuesReady(QString type, double value)
+{
+    qDebug()<<"currentti"<<type<<value;
+}
+
+void renderElectricityData::render(std::map<QString,double> dataPoints,QString series_name)
 {
 
-    allCurrentData[urlType]=dataPoints;
+    allCurrentData[series_name]=dataPoints;
 
     qDebug()<<"Ei saatana tää toimi!";
     //auto data=fingrid_->giveRequestData();
 
     auto points=getPointSeries(dataPoints);
-    QString currentType=urlType;
+    //QString currentType=urlType;
 
+
+   /**
     QString series_name;
+
     if(currentType=="193"){
        series_name="totalConsumption";
     }
@@ -61,8 +83,9 @@ void renderElectricityData::render(std::map<QString,double> dataPoints,QString u
     }else if(currentType=="191"){
         series_name="waterProduction";
     }
+    **/
 
-    qDebug()<<"current type:"<<currentType;
+    //qDebug()<<"current type:"<<currentType;
 
     addToChart(series_name,points);
 
@@ -105,14 +128,13 @@ void renderElectricityData::calcPercent()
         qDebug()<<"nyt on :"<<i;
         for(auto j: allCurrentData[i]){
             value=j.second/total[j.first]*100;
-            qDebug()<<value<<"% koko tuotannosta";
+            //qDebug()<<value<<"% koko tuotannosta";
             currentPercent[j.first]=value;
         }
         allCurrentData[i+"percent"]=currentPercent;
         auto points=getPointSeries(currentPercent);
         currentPercent.clear();
     }
-
 }
 
 void renderElectricityData::addToChart(QString series_name, QList<QPointF> points)
@@ -148,14 +170,14 @@ void renderElectricityData::addToChart(QString series_name, QList<QPointF> point
         lseries->replace(points);
         lseries->setPointsVisible(true);
     }
-    QLineSeries* lseries = qobject_cast<QLineSeries*>(series);
+    //QLineSeries* lseries = qobject_cast<QLineSeries*>(series);
 
     // Add new points
 
-    lseries->replace(points);
-    lseries->setPointsVisible(true);
+    //lseries->replace(points);
+    //lseries->setPointsVisible(true);
 
-    if(allCurrentData.size()==5){
+    if(allCurrentData.size()==7){
         calcPercent();
     }
 }

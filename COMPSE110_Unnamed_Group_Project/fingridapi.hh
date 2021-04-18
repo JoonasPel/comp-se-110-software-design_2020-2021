@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QNetworkReply>
+#include <IElectricityData.hh>
 
 class QNetworkAccessManager;
 class QFormLayout;
@@ -19,10 +20,11 @@ public:
 
 signals:
     void dataIsReady(std::map<QString,double>,QString urlType);
+    void currentDataReady(QString type, double value);
 
 private Q_SLOTS:
     void downloadFinished(QNetworkReply*);
-    //QString getSeriesName();
+    QString getSeriesName(QString val);
 
 private:
     QNetworkAccessManager* man;

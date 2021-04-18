@@ -31,8 +31,8 @@ void FinGridAPI::downloadData(QString startTime,QString endTime, QString variabl
     QUrl moi;
 
     QString urlText;
-    if(startTime=="dd-mm-yyyy"||endTime=="dd-mm-yyyy"){
-         urlText="https://api.fingrid.fi/v1/variable/193/event/csv";
+    if(startTime=="dd-mm-yyyy"||endTime=="dd-mm-yyyy"||startTime==""){
+         urlText="https://api.fingrid.fi/v1/variable/"+variableid+"/event/csv";
 
     }else{
          urlText="https://api.fingrid.fi/v1/variable/"+variableid+"/events/csv?start_time="+startTime+"&end_time="+endTime;
@@ -61,11 +61,12 @@ void FinGridAPI::downloadFinished(QNetworkReply * reply)
     qDebug()<<"Koodi:"<<currentStatuscode_;
 
     QString url =reply->url().toString();
-
+    qDebug()<<url;
     auto url2=url.split("/variable/");
-    auto url3= url2[1].split("/events");
+    auto url3= url2[1].split("/event");
 
     QString urlType=url3[0];
+
 
     //QJsonDocument document = QJsonDocument::fromJson(reply->readAll());
     //QJsonObject root = document.object();
@@ -93,10 +94,36 @@ void FinGridAPI::downloadFinished(QNetworkReply * reply)
             auto time=currentItem.at(0);
             auto value=currentItem.at(2);
             requestData_[time]=value.toDouble();
-            //qDebug()<<"time:"<<time<<"value: "<<value;
+            qDebug()<<"time:"<<time<<"value: "<<value;
         }
     }
-    emit dataIsReady(requestData_,urlType);
+    QString seriesName=getSeriesName(urlType);
+    //emit dataIsReady(requestData_,urlType);
+
+    if(url.size()<52){
+        emit currentDataReady(seriesName,requestData_[0]);
+        return;
+    }
+
+    emit dataIsReady(requestData_,seriesName);
     reply->close();
+
 }
 
+QString FinGridAPI::getSeriesName(QString currentType)
+{
+    QString series_name;
+    if(currentType=="193"){
+       series_name="totalConsumption";
+    }
+    else if(currentType=="192"){
+       series_name="totalProduction";
+    }else if(currentType=="188"){
+        series_name="nuclearProduction";
+    }else if(currentType=="181"){
+        series_name="windProduction";
+    }else if(currentType=="191"){
+        series_name="waterProduction";
+    }
+    return series_name;
+}
