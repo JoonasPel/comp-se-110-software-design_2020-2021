@@ -44,14 +44,7 @@ Row {
         Component.onCompleted: {
         }
     }
-    Slider {
-        from: 0
-        to: 84
-        anchors.top: parent.bottom
-        onValueChanged: {
-            graph_scale_h = value * 2;
-        }
-    }
+
     ComboBox {
         id: placeSelector
         objectName: "placeSelector"
@@ -73,29 +66,6 @@ Row {
         anchors.top: parent.bottom
     }
 
-    /*DatePicker{
-        id: startDatePicker
-        objectName: "startDatePicker"
-        anchors.top: parent.bottom
-        buttonText: "Start date"
-    }
-    DatePicker{
-        id: endDatePicker
-        objectName: "endDatePicker"
-        anchors.top: parent.bottom
-        buttonText: "End date"
-    }*/
-
-    /*TextField {
-        id: startTimeSelector
-        anchors.top: parent.bottom
-        placeholderText: qsTr("Starting time")
-    }
-    TextField {
-        id: endTimeSelector
-        anchors.top: parent.bottom
-        placeholderText: qsTr("Ending time")
-    }*/
     Button {
         id: savePreference
         anchors.top: parent.bottom

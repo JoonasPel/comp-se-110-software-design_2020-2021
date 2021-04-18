@@ -20,6 +20,7 @@ Window {
     property int week_hours: 24*7
     property int graph_scale_h: day_hours
     property int graph_scale_v: 30
+    property int power_graph_scale_h: 2000
 
     Row {
         id: graphRow
@@ -31,6 +32,15 @@ Window {
             id: weatherGraph
             objectName: "weatherGraph"
             title: "Weather"
+
+            Slider {
+                from: 0
+                to: 84
+                anchors.top: parent.bottom
+                onValueChanged: {
+                    graph_scale_h = value * 2;
+                }
+            }
 
             // Temperature
             LineSeries {
@@ -74,7 +84,17 @@ Window {
         ChartElement {
             id: consumptionGraph
             objectName: "consumptionGraph"
-            title: "Power consumption and production"
+            title: "Power consumption and production"       
+
+            Slider {
+                id:powerSlider
+                from: 0
+                to: 2000
+                anchors.top: parent.bottom
+                onValueChanged: {
+                    power_graph_scale_h = value * 2;
+                }
+            }
 
             // General consumption
             LineSeries {
@@ -88,7 +108,7 @@ Window {
                 }
                 axisX:ValueAxis{
                     min:1
-                    max:2000
+                    max:power_graph_scale_h
                 }
             }
 
@@ -197,6 +217,7 @@ Window {
         id: graphSelectors
         objectName: "graphSelectors"
         anchors.top: graphRow.bottom
+        anchors.topMargin: 40
 
         /* ============================
          * Left graph: Weather elements
