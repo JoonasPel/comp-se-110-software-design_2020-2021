@@ -189,8 +189,14 @@ Window {
                 objectName: "productionForecast"
                 axisY: ValueAxis {
                     min: 0
-                    max: graph_scale_v
+                    //max: graph_scale_v
+                    max:13000
                 }
+                axisX: ValueAxis{
+                    min:0
+                    max:23
+                }
+
             }
             // Consumption forecast
             LineSeries {
@@ -198,19 +204,18 @@ Window {
                 objectName: "consumptionForecast"
                 axisY: ValueAxis {
                     min: 0
-                    max: graph_scale_v
+                    //max: graph_scale_v
+                    max:13000
+                }
+                axisX: ValueAxis{
+                    min:0
+                    max:266
                 }
             }
             Button {
                 id: fetchForecast
-                objectName: "fetchForecast"
                 anchors.top: parent.bottom
                 text: qsTr("Get forecast for the next 24h")
-
-                signal renderForecast();
-                onRenderForecast: {
-                    controller.renderData(forecastGraph.objectName, weatherForecast.objectName);
-                }
 
                 onClicked: {
                     controller.fetchForecast();
@@ -245,7 +250,7 @@ Window {
         GraphCheckBox {
             id: windBox
             objectName: "windBox"
-            text: qsTr("Wind")
+            text: qsTr("Wind speed")
             checked: true
             linkedSeries: windSpeed
         }
@@ -256,7 +261,7 @@ Window {
         GraphCheckBox {
             id: consumptionBox
             objectName: "consumptionBox"
-            text: qsTr("Consumption")
+            text: qsTr("Total Consumption")
             checked: true
             linkedSeries: totalConsumption
         }
@@ -264,35 +269,35 @@ Window {
         GraphCheckBox {
             id: productionBox
             objectName: "productionBox"
-            text: qsTr("Production")
+            text: qsTr("Total Production")
             checked: true
             linkedSeries: totalProduction
         }
         GraphCheckBox {
             id: productionNuclearBox
             objectName: "productionNuclearBox"
-            text: qsTr("Nuclear")
+            text: qsTr("Nuclear Power")
             checked: true
             linkedSeries: nuclearProduction
         }
         GraphCheckBox {
             id: productionWaterBox
             objectName: "productionWaterBox"
-            text: qsTr("Water")
+            text: qsTr("Water Power")
             checked: true
             linkedSeries: waterProduction
         }
         GraphCheckBox {
             id: productionWindBox
             objectName: "productionWindBox"
-            text: qsTr("Wind")
+            text: qsTr("Wind Power")
             checked: true
             linkedSeries: windProduction
         }
         GraphCheckBox {
             id: productionPercentagesBox
             objectName: "productionPercentagesBox"
-            text: qsTr("Production %")
+            text: qsTr("Production Percentages")
             checked: true
             linkedSeries: productionPercentages
             /*
