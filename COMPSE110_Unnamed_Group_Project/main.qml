@@ -36,6 +36,7 @@ Window {
             LineSeries {
                 id: temperature;
                 objectName: "temperature"
+                name: "temperature";
                 axisX: ValueAxis {
                     min: 0
                     max: graph_scale_h
@@ -50,6 +51,7 @@ Window {
             LineSeries {
                 id: windSpeed;
                 objectName: "windSpeed"
+                name: "windspeed";
                 axisY: ValueAxis {
                     min: 0
                     max: graph_scale_v
@@ -60,6 +62,7 @@ Window {
             LineSeries {
                 id: cloudiness;
                 objectName: "cloudiness"
+                name: "cloudiness";
                 axisY: ValueAxis {
                     min: 0
                     max: graph_scale_v
@@ -77,6 +80,7 @@ Window {
             LineSeries {
                 id: totalConsumption;
                 objectName: "totalConsumption"
+                name: "totalConsumption";
                 axisY: ValueAxis {
                     min: 0
                     //max: graph_scale_v
@@ -92,6 +96,7 @@ Window {
             LineSeries {
                 id: totalProduction;
                 objectName: "totalProduction"
+                name: "totalProduction";
                 /**
                 axisY: ValueAxis {
                     min: 0
@@ -102,25 +107,17 @@ Window {
             LineSeries {
                 id: nuclearProduction;
                 objectName: "nuclearProduction"
+                name: "nuclear";
             }
             LineSeries {
                 id: windProduction;
                 objectName: "windProduction"
+                name: "wind";
             }
             LineSeries {
                 id: waterProduction;
                 objectName: "waterProduction"
-            }
-
-            StackedBarSeries {
-                property var waterAmo: []
-                property var windAmo: []
-                property var nuclAmo: []
-                id: productionPercentages
-                objectName: "productionPercentages"
-                BarSet { id: waterBar; label: "Water"; values: productionPercentages.waterAmo}
-                BarSet { id: windBar; label: "Wind"; values: productionPercentages.windAmo}
-                BarSet { id: nuclBar; label: "Nuclear"; values: productionPercentages.nuclAmo}
+                name: "water";
             }
         }
 
