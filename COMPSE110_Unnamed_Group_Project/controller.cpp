@@ -13,6 +13,7 @@ Controller::Controller(std::shared_ptr<Model> model, std::shared_ptr<Storage> st
     engine_{ engine }
 {
     connect(model_.get(), SIGNAL(fetchCompleted()), this, SIGNAL(fetchCompleted()));
+    connect(model_.get(), SIGNAL(forecastCompleted()), this, SIGNAL(forecastCompleted()));
     connected = false;
 }
 
@@ -27,6 +28,10 @@ void Controller::fetchData()
 
 void Controller::fetchForecast()
 {
+    if(!forecastConnected) {
+        connectForecastSignal();
+    }
+
     model_->fetchForecast();
 }
 
@@ -56,4 +61,10 @@ void Controller::connectSignal()
 {
     connected = true;
     connect(this, SIGNAL(fetchCompleted()), engine_->rootObjects().at(0)->findChild<QObject*>("fetchButton"), SIGNAL(renderData()));
+}
+
+void Controller::connectForecastSignal()
+{
+    forecastConnected = true;
+    connect(this, SIGNAL(forecastCompleted()), engine_->rootObjects().at(0)->findChild<QObject*>("fetchForecast"), SIGNAL(renderForecast()));
 }

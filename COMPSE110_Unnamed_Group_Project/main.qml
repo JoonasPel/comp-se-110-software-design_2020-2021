@@ -203,8 +203,14 @@ Window {
             }
             Button {
                 id: fetchForecast
+                objectName: "fetchForecast"
                 anchors.top: parent.bottom
                 text: qsTr("Get forecast for the next 24h")
+
+                signal renderForecast();
+                onRenderForecast: {
+                    controller.renderData(forecastGraph.objectName, weatherForecast.objectName);
+                }
 
                 onClicked: {
                     controller.fetchForecast();

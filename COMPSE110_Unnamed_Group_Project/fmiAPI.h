@@ -17,7 +17,7 @@ public:
     Q_INVOKABLE void loadforeCast(std::map<QString, QString>);
 
 signals:
-    void fetchCompleted(std::map<QString,std::map<QString,QString>>);
+    void fetchCompleted(std::map<QString,std::map<QString,QString>>, QString);
 
 private Q_SLOTS:
     void downloadCompleted(QNetworkReply *);
@@ -31,6 +31,7 @@ private:
     //structure to save parsed data
     std::map<QString,std::map<QString,QString>> structure_;
     QString urlModifier(std::map<QString, QString>, QString);
+    QString fetchType_ = "";
 };
 
 

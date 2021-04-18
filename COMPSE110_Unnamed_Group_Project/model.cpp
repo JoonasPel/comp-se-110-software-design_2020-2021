@@ -12,8 +12,9 @@ Model::Model(std::shared_ptr<fmiAPI> fmiapi,std::shared_ptr<renderElectricityDat
     fmiapi_(fmiapi),
     elecData_(elecData)
 {
-    connect(fmiapi_.get(), SIGNAL(fetchCompleted(std::map<QString, std::map<QString, QString>>)),
-            this, SLOT(fetchedDataReady(std::map<QString, std::map<QString, QString>>)));
+    connect(fmiapi_.get(), SIGNAL(fetchCompleted(std::map<QString, std::map<QString, QString>>, QString)),
+            this, SLOT(fetchedDataReady(std::map<QString, std::map<QString, QString>>, QString)));
+
 }
 
 void Model::fetchData()
@@ -35,10 +36,19 @@ void Model::setParameter(QString name, QString value)
     qDebug() << "model.cpp parameters_ change:" << name << value;
 }
 
-void Model::fetchedDataReady(std::map<QString, std::map<QString, QString>> fmiData)
+void Model::fetchedDataReady(std::map<QString, std::map<QString, QString>> fmiData, QString fetchType)
 {
     fmiData_ = fmiData;
-    emit fetchCompleted();
+
+    if(fetchType == "normal") {
+        emit fetchCompleted();
+    }
+    else if(fetchType == "forecast"){
+        emit forecastCompleted();
+    }
+    else {
+        qDebug() << "Unknown fetchType '" + fetchType + "' for weatherdata!";
+    }
 }
 
 /*
@@ -75,6 +85,7 @@ void Model::renderData(QString chart_name, QString series_name, QQmlApplicationE
     if(series_name == "temperature") { paramName = "t2m"; }
     else if (series_name == "windSpeed") { paramName = "ws_10min"; }
     else if (series_name == "cloudiness") { paramName = "n_man"; }
+    else if (series_name == "weatherForecast") { paramName = "temperature"; }
 
     // If no proper series is specified do nothing.
     else {

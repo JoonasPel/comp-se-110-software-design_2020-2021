@@ -34,15 +34,18 @@ public:
     // For connecting signal to render Data after download is complete.
     // Must be invoked after QWidgets are populated.
     Q_INVOKABLE void connectSignal();
+    Q_INVOKABLE void connectForecastSignal();
 
 signals:
     void fetchCompleted();
+    void forecastCompleted();
 
 private:
     std::shared_ptr<Model> model_;
     std::shared_ptr<Storage> storage_;
     QQmlApplicationEngine* engine_;
     bool connected = false;
+    bool forecastConnected = false;
 };
 
 #endif // CONTROLLER_H

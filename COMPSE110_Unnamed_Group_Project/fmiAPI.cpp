@@ -22,6 +22,8 @@ fmiAPI::fmiAPI(QWidget *parent)
 
 void fmiAPI::load(std::map<QString, QString> parameters)
 {
+    fetchType_ = "normal";
+
     QString urlNew = urlModifier(parameters, urlFMI);
 
     network->get(QNetworkRequest(urlNew));
@@ -29,6 +31,8 @@ void fmiAPI::load(std::map<QString, QString> parameters)
 
 void fmiAPI::loadforeCast(std::map<QString, QString> parameters)
 {
+    fetchType_ = "forecast";
+
     //Construct date now and date after 24 hours
     QDateTime timeNow = QDateTime::currentDateTimeUtc();
     QString timeNowStr = QDateTime::currentDateTimeUtc().toString(Qt::ISODate);
@@ -54,7 +58,7 @@ void fmiAPI::downloadCompleted(QNetworkReply *reply)
         qDebug() << "parsing in fmiAPI failed";
     } else {
         qDebug() << "Fetching ready!";
-        emit fetchCompleted(structure_);
+        emit fetchCompleted(structure_, fetchType_);
     }
 }
 
@@ -83,7 +87,6 @@ bool fmiAPI::XMLparser(QNetworkReply *reply)
             if(xmlReader->name() == "ParameterName") {
 
                 currentParameterName=xmlReader->readElementText();
-
             }
 
             if(xmlReader->name() == "ParameterValue") {

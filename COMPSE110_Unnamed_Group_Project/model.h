@@ -24,9 +24,10 @@ public:
 
 signals:
     void fetchCompleted();
+    void forecastCompleted();
 
 public slots:
-    void fetchedDataReady(std::map<QString,std::map<QString,QString>>);
+    void fetchedDataReady(std::map<QString,std::map<QString,QString>>, QString);
 
 private:
     QString urlModifier(QString);
