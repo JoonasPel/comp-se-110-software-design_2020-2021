@@ -181,7 +181,7 @@ Window {
                 name: "temperature";
                 axisX: ValueAxis {
                     min: 0
-                    max: graph_scale_h * 2
+                    max: 48
                 }
                 axisY: ValueAxis {
                     min: -30
