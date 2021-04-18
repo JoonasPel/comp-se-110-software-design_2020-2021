@@ -52,14 +52,23 @@ Item {
                    startCal.visible=false
                    textStartDate.text=Qt.formatDate(startCal.selectedDate, "dd-MM-yyyy")
                    controller.setParameter("starttime", Qt.formatDate
-                                           (startCal.selectedDate, "yyyy-MM-dd"));
+                                           (startCal.selectedDate, "yyyy-MM-dd")+"T"+startTimeField.timeText+"Z");
 
                }
                // Add initial value to parameters_ in model
                Component.onCompleted: {
                    controller.setParameter("starttime", Qt.formatDate
-                                           (startCal.selectedDate, "yyyy-MM-dd"));
+                                           (startCal.selectedDate, "yyyy-MM-dd")+"T"+startTimeField.timeText+"Z");
                }
+    }
+
+    TimeField{
+        id: startTimeField
+        anchors.top: textStartDate.bottom
+        onTimeTextChanged: {
+            controller.setParameter("starttime", Qt.formatDate
+                                    (startCal.selectedDate, "yyyy-MM-dd")+"T"+startTimeField.timeText+"Z");
+        }
     }
 
     TextField {
@@ -107,13 +116,23 @@ Item {
                    endCal.visible=false
                    textEndDate.text=Qt.formatDate(endCal.selectedDate, "dd-MM-yyyy")
                    controller.setParameter("endtime", Qt.formatDate
-                                           (endCal.selectedDate, "yyyy-MM-dd"));
+                                           (endCal.selectedDate, "yyyy-MM-dd")+"T"+endTimeField.timeText+"Z");
 
                }
                // Add initial value to parameters_ in model
                Component.onCompleted: {
                    controller.setParameter("endtime", Qt.formatDate
-                                           (endCal.selectedDate, "yyyy-MM-dd"));
+                                           (endCal.selectedDate, "yyyy-MM-dd")+"T"+endTimeField.timeText+"Z");
                }
+    }
+
+    TimeField{
+        id: endTimeField
+        anchors.left: startTimeField.right
+        anchors.top: textEndDate.bottom
+        onTimeTextChanged: {
+            controller.setParameter("endtime", Qt.formatDate
+                                    (endCal.selectedDate, "yyyy-MM-dd")+"T"+endTimeField.timeText+"Z");
+        }
     }
 }
