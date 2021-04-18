@@ -25,7 +25,7 @@ Row {
     Button {
         objectName: "fetchButton"
         font.pointSize: 20
-        text: "Fetch from FMI and Render"
+        text: " Fetch and Render Data "
         anchors.top: parent.bottom
 
         onClicked: {
@@ -50,7 +50,11 @@ Row {
         objectName: "placeSelector"
         anchors.top: parent.bottom
         width: 200
-        model: [ "Tampere", "Rovaniemi", "Helsinki" ]
+        model: [ "Helsinki", "Pirkkala", "Espoo", "Hyvinkää", "Iisalmi", "Inari",
+            "Joensuu", "Jyväskylä", "Järvenpää", "Kokkola", "Kotka", "Kuopio",
+            "Kouvola","Kuusamo", "Lahti", "Lappeenraanta", "Lohja", "Mikkeli",
+            "Oulu", "Pori", "Porvoo", "Rovaniemi", "Salo", "Seinäjoki", "Tornio",
+            "Turku","Uusikaupunki", "Vaasa", "Vantaa", "Varkaus"]
         onActivated: {
             controller.setParameter("place", placeSelector.currentText);
         }
