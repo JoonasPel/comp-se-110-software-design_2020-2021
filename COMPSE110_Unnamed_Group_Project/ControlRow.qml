@@ -46,11 +46,10 @@ Row {
     }
     Slider {
         from: 0
-        to: 1
+        to: 84
         anchors.top: parent.bottom
         onValueChanged: {
-            if (value < 0.5) { graph_scale_h = day_hours }
-            else { graph_scale_h = week_hours }
+            graph_scale_h = value * 2;
         }
     }
     ComboBox {

@@ -171,14 +171,14 @@ Window {
             id: cloudBox
             objectName: "cloudBox"
             text: qsTr("Cloudiness")
-            checked: false
+            checked: true
             linkedSeries: cloudiness
         }
         GraphCheckBox {
             id: windBox
             objectName: "windBox"
             text: qsTr("Wind speed")
-            checked: false
+            checked: true
             linkedSeries: windSpeed
         }
 
@@ -204,28 +204,28 @@ Window {
             id: productionNuclearBox
             objectName: "productionNuclearBox"
             text: qsTr("Nuclear Power")
-            checked: false
+            checked: true
             linkedSeries: nuclearProduction
         }
         GraphCheckBox {
             id: productionWaterBox
             objectName: "productionWaterBox"
             text: qsTr("Water Power")
-            checked: false
+            checked: true
             linkedSeries: waterProduction
         }
         GraphCheckBox {
             id: productionWindBox
             objectName: "productionWindBox"
             text: qsTr("Wind Power")
-            checked: false
+            checked: true
             linkedSeries: windProduction
         }
         GraphCheckBox {
             id: productionPercentagesBox
             objectName: "productionPercentagesBox"
             text: qsTr("Production Percentages")
-            checked: false
+            checked: true
             linkedSeries: productionPercentages
             /*
             onCheckedChanged: {
