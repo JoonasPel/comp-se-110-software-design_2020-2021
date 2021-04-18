@@ -50,6 +50,7 @@ bool fmiAPI::XMLparser(QNetworkReply *reply)
 
     QString currentTime="";
     QString currentParameterName;
+    structure_.clear();
 
     //Parse the XML until we reach end of it
     while(!xmlReader->atEnd() && !xmlReader->hasError()) {
