@@ -245,7 +245,7 @@ Window {
         GraphCheckBox {
             id: windBox
             objectName: "windBox"
-            text: qsTr("Wind speed")
+            text: qsTr("Wind")
             checked: true
             linkedSeries: windSpeed
         }
@@ -256,7 +256,7 @@ Window {
         GraphCheckBox {
             id: consumptionBox
             objectName: "consumptionBox"
-            text: qsTr("Total Consumption")
+            text: qsTr("Consumption")
             checked: true
             linkedSeries: totalConsumption
         }
@@ -264,35 +264,35 @@ Window {
         GraphCheckBox {
             id: productionBox
             objectName: "productionBox"
-            text: qsTr("Total Production")
+            text: qsTr("Production")
             checked: true
             linkedSeries: totalProduction
         }
         GraphCheckBox {
             id: productionNuclearBox
             objectName: "productionNuclearBox"
-            text: qsTr("Nuclear Power")
+            text: qsTr("Nuclear")
             checked: true
             linkedSeries: nuclearProduction
         }
         GraphCheckBox {
             id: productionWaterBox
             objectName: "productionWaterBox"
-            text: qsTr("Water Power")
+            text: qsTr("Water")
             checked: true
             linkedSeries: waterProduction
         }
         GraphCheckBox {
             id: productionWindBox
             objectName: "productionWindBox"
-            text: qsTr("Wind Power")
+            text: qsTr("Wind")
             checked: true
             linkedSeries: windProduction
         }
         GraphCheckBox {
             id: productionPercentagesBox
             objectName: "productionPercentagesBox"
-            text: qsTr("Production Percentages")
+            text: qsTr("Production %")
             checked: true
             linkedSeries: productionPercentages
             /*
