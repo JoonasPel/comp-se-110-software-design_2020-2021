@@ -14,6 +14,7 @@ class fmiAPI :public QWidget
 public:
     explicit fmiAPI(QWidget *parent = nullptr);
     Q_INVOKABLE void load(std::map<QString, QString>);
+    Q_INVOKABLE void loadforeCast(std::map<QString, QString>);
 
 signals:
     void fetchCompleted(std::map<QString,std::map<QString,QString>>);
@@ -25,10 +26,11 @@ private:
     QFormLayout *form;
     QNetworkAccessManager *network;
     QString urlFMI;
+    QString urlFMIforeCast;
     bool XMLparser(QNetworkReply*);
     //structure to save parsed data
     std::map<QString,std::map<QString,QString>> structure_;
-    QString urlModifier(std::map<QString, QString>);
+    QString urlModifier(std::map<QString, QString>, QString);
 };
 
 

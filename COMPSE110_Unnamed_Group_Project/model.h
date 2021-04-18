@@ -17,6 +17,7 @@ public:
     explicit Model(std::shared_ptr<fmiAPI> downloader,std::shared_ptr<renderElectricityData> elecData, QObject *parent = nullptr);
 
     void fetchData();
+    void fetchForecast();
     QList<QPointF> getPointSeries(QString name);
     void renderData(QString chart_name, QString series_name, QQmlApplicationEngine* engine);
     void setParameter(QString name, QString value);

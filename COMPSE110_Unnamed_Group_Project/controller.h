@@ -22,6 +22,7 @@ public:
                         QObject *parent = nullptr);
 
     Q_INVOKABLE void fetchData();
+    Q_INVOKABLE void fetchForecast();
 
     Q_INVOKABLE void renderData(QString chart_name, QString series_name);
 

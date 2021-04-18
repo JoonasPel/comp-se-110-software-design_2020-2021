@@ -181,6 +181,15 @@ Window {
                     max: graph_scale_v
                 }
             }
+            Button {
+                id: fetchForecast
+                anchors.top: parent.bottom
+                text: qsTr("Get forecast for the next 24h")
+
+                onClicked: {
+                    controller.fetchForecast();
+                }
+            }
         }
     }
 

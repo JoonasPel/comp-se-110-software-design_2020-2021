@@ -23,6 +23,12 @@ void Model::fetchData()
 
 }
 
+void Model::fetchForecast()
+{
+    fmiapi_->loadforeCast(parameters_);
+    //fingrid->dosomething
+}
+
 void Model::setParameter(QString name, QString value)
 {
     parameters_[name] = value;

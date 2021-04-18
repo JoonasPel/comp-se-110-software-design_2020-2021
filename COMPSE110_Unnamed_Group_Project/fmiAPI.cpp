@@ -13,6 +13,8 @@ fmiAPI::fmiAPI(QWidget *parent)
     : QWidget(parent)
 {
     urlFMI = ("https://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::observations::weather::simple&timestep=60&parameters=t2m,ws_10min,n_man");
+    urlFMIforeCast = ("https://opendata.fmi.fi/wfs?request=getFeature&version=2.0.0&storedquery_id=fmi::forecast::harmonie::surface::point::simple&timestep=30&eparameters=temperature");
+
     form = new QFormLayout(this);
     network = new QNetworkAccessManager(this);
     connect(network, &QNetworkAccessManager::finished, this, &fmiAPI::downloadCompleted);
@@ -20,8 +22,23 @@ fmiAPI::fmiAPI(QWidget *parent)
 
 void fmiAPI::load(std::map<QString, QString> parameters)
 {
-    QString urlNew = urlModifier(parameters);
+    QString urlNew = urlModifier(parameters, urlFMI);
 
+    network->get(QNetworkRequest(urlNew));
+}
+
+void fmiAPI::loadforeCast(std::map<QString, QString> parameters)
+{
+    //Construct date now and date after 24 hours
+    QDateTime timeNow = QDateTime::currentDateTimeUtc();
+    QString timeNowStr = QDateTime::currentDateTimeUtc().toString(Qt::ISODate);
+    QDateTime dayLater = timeNow.addDays(1);
+    QString daylaterStr = dayLater.toString(Qt::ISODate);
+
+    parameters["starttime"] = timeNowStr;
+    parameters["endtime"] = daylaterStr;
+
+    QString urlNew = urlModifier(parameters, urlFMIforeCast);
     network->get(QNetworkRequest(urlNew));
 }
 
@@ -106,9 +123,9 @@ bool fmiAPI::XMLparser(QNetworkReply *reply)
 /*
  * Modifies url with given querys and returns modified(new) url
  */
-QString fmiAPI::urlModifier(std::map<QString, QString> parameters)
+QString fmiAPI::urlModifier(std::map<QString, QString> parameters, QString url)
 {
-    QUrl urlNew(urlFMI);
+    QUrl urlNew(url);
     QUrlQuery query(urlNew.query());
 
     //Modify every query separately

@@ -25,6 +25,11 @@ void Controller::fetchData()
     model_->fetchData();
 }
 
+void Controller::fetchForecast()
+{
+    model_->fetchForecast();
+}
+
 // Render weather data to application UI graphs.
 void Controller::renderData(QString chart_name, QString series_name)
 {
