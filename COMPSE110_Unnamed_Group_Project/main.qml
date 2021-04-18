@@ -13,7 +13,7 @@ Window {
     title: qsTr("Weathercast")
 
     // Sizing constraints for graphs
-    property int chartWidth: mainWindow.width / 3
+    property int chartWidth: mainWindow.width / 4
     property int chartHeight: mainWindow.height / 2
 
     property int day_hours: 24
@@ -148,7 +148,42 @@ Window {
             }
 
         }
+
+        // Chart for weather and power forecast for next 24h
+        ChartElement {
+            id: forecastGraph
+            objectName: "forecastGraph"
+            title: "FORECAST"
+            // Weather forecast
+            LineSeries {
+                id: weatherForecast;
+                objectName: "weatherForecast"
+                axisY: ValueAxis {
+                    min: 0
+                    max: graph_scale_v
+                }
+            }
+            // Production forecast
+            LineSeries {
+                id: productionForecast;
+                objectName: "productionForecast"
+                axisY: ValueAxis {
+                    min: 0
+                    max: graph_scale_v
+                }
+            }
+            // Consumption forecast
+            LineSeries {
+                id: consumptionForecast;
+                objectName: "consumptionForecast"
+                axisY: ValueAxis {
+                    min: 0
+                    max: graph_scale_v
+                }
+            }
+        }
     }
+
     Row {
         id: graphSelectors
         objectName: "graphSelectors"
