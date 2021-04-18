@@ -84,7 +84,7 @@ Window {
                 }
                 axisX:ValueAxis{
                     min:1
-                    max:120
+                    max:2000
                 }
             }
 

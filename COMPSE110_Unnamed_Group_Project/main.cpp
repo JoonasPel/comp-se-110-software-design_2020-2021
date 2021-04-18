@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
 
     //auto electricData{std::make_shared<renderElectricityData>(&engine)};
     //ren->fetchData("2021-03-18T22:00:00Z","2021-03-19T04:00:00Z");
-    electricData->getCurrentValues();
+    //electricData->getCurrentValues();
 
 
 
