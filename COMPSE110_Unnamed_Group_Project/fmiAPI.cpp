@@ -37,7 +37,7 @@ void fmiAPI::downloadCompleted(QNetworkReply *reply)
         qDebug() << "parsing in fmiAPI failed";
     } else {
         qDebug() << "Fetching ready!";
-        emit fetchCompleted();
+        emit fetchCompleted(structure_);
     }
 }
 

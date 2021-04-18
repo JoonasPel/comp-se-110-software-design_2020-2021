@@ -24,11 +24,15 @@ public:
 signals:
     void fetchCompleted();
 
+public slots:
+    void fetchedDataReady(std::map<QString,std::map<QString,QString>>);
+
 private:
     QString urlModifier(QString);
 
     std::shared_ptr<fmiAPI> fmiapi_;
     std::map<QString, QString> parameters_;
+    std::map<QString,std::map<QString,QString>> fmiData_;
 
 };
 

@@ -16,7 +16,7 @@ public:
     Q_INVOKABLE void load(std::map<QString, QString>);
 
 signals:
-    void fetchCompleted();
+    void fetchCompleted(std::map<QString,std::map<QString,QString>>);
 
 private Q_SLOTS:
     void downloadCompleted(QNetworkReply *);
